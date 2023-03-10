@@ -28,10 +28,10 @@ namespace EmployeeManagmentApplication.Controllers
 
 
 
-        public EmployeeController(IDataReposatory _dataReposatory,IEmployeeRepository employeeRepository,IMapper mapper,IWebHostEnvironment webHostEnvironment)
+        public EmployeeController(IDataReposatory _datarepository, IEmployeeRepository employeeRepository,IMapper mapper,IWebHostEnvironment webHostEnvironment)
         {
            
-            _DataReposatory = _dataReposatory;
+            _DataReposatory = _datarepository;
             _EmployeeRepository = employeeRepository;
             _mapper = mapper;
             _webHostEnvironment = webHostEnvironment;
@@ -57,7 +57,7 @@ namespace EmployeeManagmentApplication.Controllers
 
         [HttpPost("AddEmployee")]
 
-        public async Task<ActionResult> Post([FromForm] EmployeeDetail employee)
+        public async Task<ActionResult> Post([FromBody] EmployeeDetail employee)
         {
 
             var result = await _EmployeeRepository.AddEmployeeAsync(employee);
@@ -71,18 +71,13 @@ namespace EmployeeManagmentApplication.Controllers
 
       
         [HttpPut("UpdateEmployee")]
-        public async Task<ActionResult> Put(EmployeeDetail employee)
+        public async Task<ActionResult> Put([FromBody] EmployeeDetail employee)
         {
             if (employee.EmployeeId != employee.EmployeeId)
             {
                 return BadRequest();
             }
-            var employee1 = await _EmployeeRepository.GetEmployeeByIdAsync(employee.EmployeeId);
-            if (employee == null)
-            {
-                return NotFound();
-
-            }
+           
             await _EmployeeRepository.UpdateEmployeeAsync(employee);
             return Ok("Update Successfully");
         }
@@ -93,12 +88,7 @@ namespace EmployeeManagmentApplication.Controllers
             {
                 return BadRequest("Value Enter Invalid");
             }
-            var employee = await _EmployeeRepository.GetEmployeeByIdAsync(id);
-            if (employee == null)
-            {
-                return NotFound();
-
-            }
+           
             var eemp = await _EmployeeRepository.EmployeeRemoveAsync(id);
             
             return Ok("Remove Successfully");

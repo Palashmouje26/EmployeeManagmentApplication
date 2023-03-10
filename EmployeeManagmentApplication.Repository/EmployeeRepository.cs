@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using EmployeeManagmentApplication.Data;
 using EmployeeManagmentApplication.Modal.Modals;
+using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using System;
@@ -50,9 +51,9 @@ namespace EmployeeManagmentApplication.Repository
         {
             var employeeDetails =  _dataReposatory.Where<Employee>(a => a.EmployeeId == employeeDetail.EmployeeId).First();
 
-            employeeDetails.PhoneNumber = employeeDetail.PhoneNumber;
             employeeDetails.EmployeeFirstName = employeeDetail.EmployeeFirstName;
             employeeDetails.EmployeeLastName = employeeDetail.EmployeeLastName;
+            employeeDetails.PhoneNumber = employeeDetail.PhoneNumber;
 
             await _dataReposatory.UpdateAsync(employeeDetails);
             return employeeDetail;
@@ -61,8 +62,13 @@ namespace EmployeeManagmentApplication.Repository
         }
         public async Task<EmployeeDetail> EmployeeRemoveAsync(int id)
         {
-            var empoyeeDetail = _dataReposatory.Where<Employee>(a => a.EmployeeId == id).First();
-
+            var empoyeeDetail = _dataReposatory.FirstOrDefaultAsync<Employee>(a => a.EmployeeId == id); 
+           
+            if (empoyeeDetail != null) 
+            {
+                await _dataReposatory.RemoveAsync(empoyeeDetail); 
+            }
+        
             await _dataReposatory.RemoveAsync(empoyeeDetail);
          
             return _mapper.Map<EmployeeDetail>(empoyeeDetail);
