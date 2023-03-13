@@ -8,10 +8,13 @@ namespace EmployeeManagmentApplication.Repository
 {
     public interface ISalaryModuleRepository
     {
-        Task<IEnumerable<SalaryModule>> GetSalaryModule();
-        Task<SalaryModule> GetSalaryModuleByID(int ID);
-        Task<SalaryModule> InsertSalary(SalaryModule SalaryModule);
-        Task<SalaryModule> UpdateSalary(SalaryModule SalaryModule);
-        bool DeleteSalaryModule(int ID);
+
+        Task<List<SalaryModuleDetails>> GetAllSalaryModuleAsync();
+        Task<SalaryModuleDetails> GetSalaryModuleByIDAsync(int salaryId);
+        Task<SalaryModuleDetails> AddSalaryAsync(SalaryModuleDetails salaryModule);
+        Task<SalaryModuleDetails> UpdateSalaryModuleAsync(SalaryModuleDetails salaryModuledetail);
+
+        Task SalaryModuleRemoveAsync(int id);
+
     }
 }

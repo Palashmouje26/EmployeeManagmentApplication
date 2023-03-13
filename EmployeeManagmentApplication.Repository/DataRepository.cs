@@ -25,6 +25,7 @@ namespace EmployeeManagmentApplication.Data
             var dbSet = CreateDbSetAsync<T>();
             await dbSet.AddAsync(entity);
             await _DBContext.SaveChangesAsync();
+            
         }
 
         public Task AddRangeAsync<T>(IEnumerable<T> entities) where T : class
@@ -44,12 +45,15 @@ namespace EmployeeManagmentApplication.Data
 
         public Task<T> FirstOrDefaultAsync<T>(Expression<Func<T, bool>> predicate) where T : class
         {
-            throw new NotImplementedException();
+            var dbSet = CreateDbSetAsync<T>();
+            return dbSet.FirstOrDefaultAsync(predicate);
         }
 
-        public Task<List<T>> GetAllAsync<T>() where T : class
+        public async Task<List<T>> GetAllAsync<T>() where T : class
         {
-            throw new NotImplementedException();
+            var dbSet = CreateDbSetAsync<T>();
+            var values=await dbSet.ToListAsync<T>();
+            return values;
         }
 
         public IDbContextTransaction GetTransaction()

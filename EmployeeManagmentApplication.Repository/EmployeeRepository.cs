@@ -1,16 +1,15 @@
 ﻿using AutoMapper;
 using EmployeeManagmentApplication.Data;
+using EmployeeManagmentApplication.Modal.EmployeeProfile;
 using EmployeeManagmentApplication.Modal.Modals;
-using Microsoft.CodeAnalysis;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Net;
-using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
 
 namespace EmployeeManagmentApplication.Repository
 {
@@ -18,14 +17,17 @@ namespace EmployeeManagmentApplication.Repository
     {
         private readonly EmployeeRepository _EmployeeRepository;
 
-        private readonly EmployeeDBContext _DBContext;
+        
         private readonly IDataReposatory _dataReposatory;
         private readonly IMapper _mapper;
-        public EmployeeRepository(IDataReposatory dataReposatory, IMapper mapper)
+        private readonly IWebHostEnvironment _webHostEnvironment;
+
+        public EmployeeRepository(IDataReposatory dataReposatory, IMapper mapper, IWebHostEnvironment webHostEnvironment)
         {
             //_DBContext = dbcontext;
             _dataReposatory = dataReposatory;
             _mapper = mapper;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         public async Task<List<EmployeeDetail>> GetAllEmployeeAsync()
@@ -41,10 +43,30 @@ namespace EmployeeManagmentApplication.Repository
         }
         public async Task<EmployeeDetail> AddEmployeeAsync(EmployeeDetail employee)
         {
-            var newEmployee = _mapper.Map<Employee>(employee);
+            var newEmployee = _mapper.Map<EmployeeDetail, Employee>(employee);
             newEmployee.EmployeeId = 0;
-            await _dataReposatory.AddAsync(newEmployee);
-            return _mapper.Map<EmployeeDetail>(newEmployee);
+
+            if (newEmployee.EmployeeId == 0)
+            {
+                if (employee.Image.Length <= 2097152)  // File size checking up to 2 mb  //
+                {
+                    var fileExtenstion = EmployeeProfiel(employee.Image); // file will be checking is extansion formate //
+                    if (!fileExtenstion)
+                    {
+                        return null ;
+                    }
+
+                    var directoryPath = Path.Combine(_webHostEnvironment.ContentRootPath + "\\ProfileImages\\");   // receving the image path tho save //
+                    var filePath = Path.Combine(directoryPath, employee.Image.FileName);
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        employee.Image.CopyTo(stream);
+                    }
+                    newEmployee.EmployeeProfilePhoto = employee.Image.FileName;
+                    await _dataReposatory.AddAsync(newEmployee);
+                }
+            }
+            return _mapper.Map<Employee, EmployeeDetail>(newEmployee);
 
         }
         public async Task<EmployeeDetail> UpdateEmployeeAsync(EmployeeDetail employeeDetail)
@@ -75,6 +97,16 @@ namespace EmployeeManagmentApplication.Repository
 
         }
 
-    
+        private bool EmployeeProfiel(IFormFile employeeprofilePhoto)  // checking the file is jpg ,jpeg and png formate // 
+        {
+            var supportedtype = new[] { ".jpg", ".jpeg", ".png" };
+            var fileExtension = Path.GetExtension(employeeprofilePhoto.FileName);
+            if (!supportedtype.Contains(fileExtension))
+            {
+                return false;
+            }
+            return true;
+        }
+
     }
 }

@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace EmployeeManagmentApplication.Modal.Modals
@@ -30,8 +32,9 @@ namespace EmployeeManagmentApplication.Modal.Modals
 
         [RegularExpression(@"[A-Z]{5}[0-9]{4}[A-Z]{1}", ErrorMessage = "enter Valid Pan number only")]
         public string PanCard { get; set; }
-
-        public string EmployeeProfilePhoto { get; set; }
+        [NotMapped]
+        public IFormFile Image { get; set; }
+        public string EmployeeProfilePhoto;
         public string Status { get; set; }
     }
 }

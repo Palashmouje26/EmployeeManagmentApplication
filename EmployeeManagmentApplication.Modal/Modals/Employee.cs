@@ -35,7 +35,6 @@ namespace EmployeeManagmentApplication.Modal.Modals
 
         [RegularExpression(@"[A-Z]{5}[0-9]{4}[A-Z]{1}", ErrorMessage = "enter Valid Pan number only")]
         public string PanCard { get; set; }
-
         public string EmployeeProfilePhoto { get; set; }
         public string Status { get; set; }
     }

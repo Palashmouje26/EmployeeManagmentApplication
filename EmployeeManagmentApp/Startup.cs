@@ -68,6 +68,7 @@ namespace EmployeeManagmentApp
             app.UseSwagger();
 
             app.UseSwaggerUI(c => {
+                
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "WEB API");
                 c.DocumentTitle = "WEB API";
                 c.DocExpansion(DocExpansion.List);

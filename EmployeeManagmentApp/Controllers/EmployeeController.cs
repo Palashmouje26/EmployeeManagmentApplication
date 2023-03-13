@@ -28,9 +28,9 @@ namespace EmployeeManagmentApplication.Controllers
 
 
 
-        public EmployeeController(IDataReposatory _datarepository, IEmployeeRepository employeeRepository,IMapper mapper,IWebHostEnvironment webHostEnvironment)
+        public EmployeeController(IDataReposatory _datarepository, IEmployeeRepository employeeRepository, IMapper mapper, IWebHostEnvironment webHostEnvironment)
         {
-           
+
             _DataReposatory = _datarepository;
             _EmployeeRepository = employeeRepository;
             _mapper = mapper;
@@ -38,7 +38,7 @@ namespace EmployeeManagmentApplication.Controllers
 
         }
 
-       
+
         [HttpGet]
         [Route("GetEmployee")]
         public async Task<IActionResult> Get()
@@ -57,9 +57,8 @@ namespace EmployeeManagmentApplication.Controllers
 
         [HttpPost("AddEmployee")]
 
-        public async Task<ActionResult> Post([FromBody] EmployeeDetail employee)
+        public async Task<ActionResult> Post([FromForm] EmployeeDetail employee)
         {
-
             var result = await _EmployeeRepository.AddEmployeeAsync(employee);
 
             if (result.EmployeeId == 0)
@@ -69,7 +68,7 @@ namespace EmployeeManagmentApplication.Controllers
             return Ok("Added Successfully");
         }
 
-      
+
         [HttpPut("UpdateEmployee")]
         public async Task<ActionResult> Put([FromBody] EmployeeDetail employee)
         {
@@ -77,7 +76,6 @@ namespace EmployeeManagmentApplication.Controllers
             {
                 return BadRequest();
             }
-           
             await _EmployeeRepository.UpdateEmployeeAsync(employee);
             return Ok("Update Successfully");
         }
@@ -88,9 +86,9 @@ namespace EmployeeManagmentApplication.Controllers
             {
                 return BadRequest("Value Enter Invalid");
             }
-           
+
             var eemp = await _EmployeeRepository.EmployeeRemoveAsync(id);
-            
+
             return Ok("Remove Successfully");
         }
 
@@ -98,67 +96,7 @@ namespace EmployeeManagmentApplication.Controllers
 
     }
 
-        //[HttpDelete]
-        ////[HttpDelete("{id}")]
-        //[Route("DeleteEmployee")]
-        //public JsonResult Delete(int id)
-        //{
-        //    _EmployeeRepository.RemoveRangeAsync(id);
-        //    return new JsonResult("Deleted Successfully");
-        //}
-
-        ////Product Image Upload Process //
-        //[HttpPost("[action]")]
-        //public async Task<ActionResult<Employee>> UploadFiles([FromForm]  EmployeeProfiles employeeProfiles)
-        //{
-
-
-        //    if (employeeProfiles.EmployeeProfilePhoto.Length <= 2097152)  // File size checking up to 2 mb  //
-        //    {
-        //        var fileExtenstion = EmployeeProfiel(employeeProfiles.EmployeeProfilePhoto); // file will be checking is extansion formate //
-        //        if (!fileExtenstion)
-        //        {
-        //            return Ok("The file is too large.");
-        //        }
-
-        //        var directoryPath = Path.Combine(_webHostEnvironment.ContentRootPath + "\\ProfileImages\\");   // receving the image path tho save //
-
-        //        var EmployeeDetail = new Employee
-        //        {
-        //            EmployeeFirstName = employeeProfiles.EmployeeFirstName,
-        //            EmployeeLastName = employeeProfiles.EmployeeLastName,
-        //            EmailId = employeeProfiles.EmailId,
-        //            Address = employeeProfiles.Address,
-        //            PhoneNumber = employeeProfiles.PhoneNumber,
-        //            AdharCard = employeeProfiles.AdharCard,
-        //            PanCard = employeeProfiles.PanCard,
-        //            EmployeeProfilePhoto = employeeProfiles.EmployeeProfilePhoto.FileName,
-        //            Status = employeeProfiles.Status
-        //        };
-
-        //        var filePath = Path.Combine(directoryPath, employeeProfiles.EmployeeProfilePhoto.FileName);
-        //        using (var stream = new FileStream(filePath, FileMode.Create))
-        //        {
-        //            employeeProfiles.EmployeeProfilePhoto.CopyTo(stream);
-        //        }
-        //        await _EmployeeRepository.InsertEmployee(EmployeeDetail);
-
-        //        return Ok("Image Save  Successfully");
-        //    }
-        //    return Ok("The file is too large.");
-        //}
-
-        //private bool EmployeeProfiel(IFormFile pmployeeprofilePhoto)  // checking the file is jpg ,jpeg and png formate // 
-        //{
-        //    var supportedtype = new[] { ".jpg", ".jpeg", ".png" };
-        //    var fileExtension = Path.GetExtension(pmployeeprofilePhoto.FileName);
-        //    if (!supportedtype.Contains(fileExtension))
-        //    {
-        //        return false;
-        //    }
-        //    return true;
-        //}
-    }
+}
 
 
 

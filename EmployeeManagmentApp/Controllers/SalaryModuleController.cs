@@ -21,64 +21,47 @@ namespace EmployeeManagmentApplication.Controllers
         private readonly ISalaryModuleRepository _SalaryModuleRepository;
         private readonly IMapper _mapper;
         private readonly IWebHostEnvironment _webHostEnvironment;
+        private readonly IDataReposatory _dataRepository;
 
-        public SalaryModuleController( ISalaryModuleRepository salaryModuleRepository, IMapper mapper, IWebHostEnvironment webHostEnvironment, ISalaryDataRepository ISalaryDataRepository)
+
+        public SalaryModuleController( ISalaryModuleRepository salaryModuleRepository, IMapper mapper, IWebHostEnvironment webHostEnvironment, ISalaryDataRepository ISalaryDataRepository,IDataReposatory dataRepository)
         {
            
             _SalaryModuleRepository = salaryModuleRepository;
             _mapper = mapper;
             _webHostEnvironment = webHostEnvironment;
            _SalaryDataRepository = ISalaryDataRepository;
+            _dataRepository = dataRepository;
         }
 
 
-        [HttpGet]
-        [Route("GetSalaryModule")]
-        //public async Task<ActionResult<IEnumerable<SalaryModule>>> GetSalaryModule()
-        //{
-        //    return await _SalaryDataRepository.GetSalaryModule();
-        //}
-        //public async Task<IActionResult> GetSalaryModule()
-        public async Task<ActionResult<IEnumerable<SalaryModule>>> GetSalaryModule()
+      
+        [HttpGet("GetSalaryModule")]
+    
+        public async Task<ActionResult<SalaryModule>> GetSalaryModule()
         {
-            return Ok(await _SalaryDataRepository.GetSalaryModule());
+            return Ok(await _SalaryModuleRepository.GetAllSalaryModuleAsync());
+   
         }
 
-        [HttpGet]
 
-        [Route("GetSalaryModuoleByID/{Id}")]
+
+        [HttpGet("GetSalaryModuleByID/{Id}")]
 
         public async Task<IActionResult> GetDeptById(int Id)
         {
-            return Ok(await _SalaryDataRepository.GetSalaryModuleByID(Id));
+            return Ok(await _SalaryModuleRepository.GetSalaryModuleByIDAsync(Id));
         }
 
         [HttpPost]
 
         [Route("AddSalaryModule")]
 
-        public async Task<ActionResult<SalaryModule>> Post([FromForm] SalaryModuleDetails salaryModule)
+        public async Task<ActionResult<SalaryModule>> Post([FromBody] SalaryModuleDetails salaryModule)
         {
-            var HRA = salaryModule.Basic + 1000;
-            var DA = salaryModule.Basic * 10 / 100;
-            var PT = 200;
-            var Deduction = salaryModule.Basic - PT;
-            var NetSalary = (salaryModule.Basic + HRA) + (DA - Deduction);
-            var salaryDetal = new SalaryModule
-            {
-                EmployeeId = salaryModule.EmployeeId,
-                Basic = salaryModule.Basic,
-                HRA = HRA,
-                PT = PT,
-                DA = DA,
-                Deduction = Deduction,
-                NetSalary = NetSalary,
-            };
-            //var printf= ("Net Salary is:", NetSalary)
+            var result = await _SalaryModuleRepository.AddSalaryAsync(salaryModule);
 
-            var result = await _SalaryDataRepository.InsertSalary(salaryDetal);
-
-            if (result.SalaryId == 0)
+            if (result.SalaryId == 1)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "Something Went Wrong");
             }
@@ -86,46 +69,45 @@ namespace EmployeeManagmentApplication.Controllers
         }
 
         [HttpPut]
-        [Route("UpdateSalaryModuole")]
-        public async Task<IActionResult> Put(SalaryModule salaryModule)
+        [Route("UpdateSalaryModule")]
+        public async Task<IActionResult> Put([FromBody] SalaryModuleDetails salaryModule)
         {
-            var HRA = salaryModule.Basic + 1000;
-            var DA = salaryModule.Basic * 10 / 100;
-            var PT = 200;
-            var Deduction = salaryModule.Basic - PT;
-            var NetSalary = (salaryModule.Basic + HRA) + (DA - Deduction);
-            var salaryDetal = new SalaryModule
+            if(!ModelState.IsValid)
             {
-                EmployeeId = salaryModule.EmployeeId,
-                Basic = salaryModule.Basic,
-                HRA = HRA,
-                PT = PT,
-                DA = DA,
-                Deduction = Deduction,
-                NetSalary = NetSalary,
-            };
-            await _SalaryDataRepository.UpdateSalary(salaryDetal);
+                return BadRequest();
+            }
+            var response=await _SalaryModuleRepository.UpdateSalaryModuleAsync(salaryModule);
+           
+            if(response is null)
+            {
+                return NotFound();
+            }
             return Ok("Updated Successfully");
         }
 
-        [HttpDelete]
-        //[HttpDelete("{id}")]
-        [Route("DeleteSalaryModuole")]
-        public JsonResult Delete(int id)
+       
+        [HttpDelete("DeleteSalaryModule")]
+        public async Task<ActionResult> DeleteSalaryAsync(int id)
         {
-            _SalaryDataRepository.DeleteSalaryModule(id);
-            return new JsonResult("Deleted Successfully");
+            if (id == 0)
+            {
+                return BadRequest("Value Enter Invalid");
+            }
+
+            var eemp =  _SalaryModuleRepository.SalaryModuleRemoveAsync(id);
+
+            return Ok("Remove Successfully");
         }
 
-        //[HttpGet]
 
-        //[Route("GetPaySlip")]
-        //public async Task<ActionResult<IEnumerable<SalaryModule>>> GetSalaryModule()
 
+        //[HttpGet("GetPaySlip")]
+        //public async Task<ActionResult<SalaryModule>> GetAllSalaryModule()
         //{
-        //    var x = await _SalaryDataRepository.GetSalaryModule();
-        //    return Ok(x.ToList());
+        //    return Ok(await _SalaryModuleRepository.());
+
         //}
+
 
     }
 }
