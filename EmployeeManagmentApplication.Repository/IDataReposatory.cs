@@ -11,11 +11,7 @@ namespace EmployeeManagmentApplication.Data
 {
     public interface IDataReposatory
     {
-        //Task<IEnumerable<Employee>> GetEmployee();
-        //Task<Employee> GetEmployeeByID(int ID);
-        //Task<Employee> InsertEmployee(Employee employee);
-        //Task<Employee> UpdateEmployee(Employee employee);
-        //bool DeleteEmployee(int ID);
+        
 
         /// <summary>
         /// Filters data based on predicate.

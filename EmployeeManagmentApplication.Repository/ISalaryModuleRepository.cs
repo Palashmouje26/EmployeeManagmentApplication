@@ -15,5 +15,6 @@ namespace EmployeeManagmentApplication.Repository
         Task<SalaryModuleDetails> UpdateSalaryModuleAsync(SalaryModuleDetails salaryModuledetail);
 
         Task<SalaryModuleDetails> SalaryModuleRemoveAsync(int id);
+        Task<SalaryModuleDetails> GetSalaryModulesByIDAsync(int salaryId);
     }
 }

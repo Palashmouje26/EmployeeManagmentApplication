@@ -37,10 +37,10 @@ namespace EmployeeManagmentApplication.Data
             throw new NotImplementedException();
         }
 
-        public Task<T> FirstAsync<T>(Expression<Func<T, bool>> predicate) where T : class
+        public async Task<T> FirstAsync<T>(Expression<Func<T, bool>> predicate) where T : class
         {
             var dbSet = CreateDbSetAsync<T>();
-            return dbSet.FirstAsync(predicate);
+            return await dbSet.FirstAsync(predicate);
         }
 
         public Task<T> FirstOrDefaultAsync<T>(Expression<Func<T, bool>> predicate) where T : class

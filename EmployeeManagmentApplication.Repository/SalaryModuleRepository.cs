@@ -12,7 +12,6 @@ namespace EmployeeManagmentApplication.Repository
 {
     public class SalaryModuleRepository : ISalaryModuleRepository
     {
-        private readonly EmployeeDBContext _DBContext;
         private readonly IDataReposatory _dataReposatory;
         private readonly IMapper _mapper;
         public SalaryModuleRepository(IDataReposatory dataReposatory, IMapper mapper)
@@ -27,9 +26,14 @@ namespace EmployeeManagmentApplication.Repository
             return _mapper.Map<List<SalaryModule>, List<SalaryModuleDetails>>(salarydeatails);   
         }
 
-        public async Task<SalaryModuleDetails> GetSalaryModuleByIDAsync(int salaryId)
+        public async Task<SalaryModuleDetails> GetSalaryModuleByIDAsync(int empId)
         {
-            var salarydeatail = await _dataReposatory.FirstAsync<SalaryModule>(a => a.SalaryId == salaryId);
+            var salarydeatail = await _dataReposatory.FirstAsync<SalaryModule>(a => a.SalaryId == empId);
+            return _mapper.Map<SalaryModuleDetails>(salarydeatail);
+        }
+        public async Task<SalaryModuleDetails> GetSalaryModulesByIDAsync(int salaryId)
+        {
+            var salarydeatail = await _dataReposatory.FirstAsync<SalaryModule>(a => a.EmployeeId == salaryId);
             return _mapper.Map<SalaryModuleDetails>(salarydeatail);
         }
 
@@ -54,17 +58,13 @@ namespace EmployeeManagmentApplication.Repository
                 NetSalary = NetSalary,
             };
 
-            if (newSalary.SalaryId == 1)
-            {
-                return null;
-            }
             await _dataReposatory.AddAsync(salaryDetal);
             return _mapper.Map<SalaryModuleDetails>(newSalary);
         }
         
         public async Task<SalaryModuleDetails> UpdateSalaryModuleAsync(SalaryModuleDetails salaryModuledetail )
         {
-            var salaryModuleDetails = await _dataReposatory.Where<SalaryModule>(a => a.SalaryId == salaryModuledetail.SalaryId).FirstOrDefaultAsync();
+            var salaryModuleDetails = await _dataReposatory.FirstOrDefaultAsync<SalaryModule>(a => a.SalaryId == salaryModuledetail.SalaryId);
 
             if(salaryModuleDetails == null)
             {
@@ -95,18 +95,10 @@ namespace EmployeeManagmentApplication.Repository
                 await _dataReposatory.RemoveAsync(salaryModuleDetail);
             }
 
-            await _dataReposatory.RemoveAsync(salaryModuleDetail);
-
             return _mapper.Map<SalaryModuleDetails>(salaryModuleDetail);
 
         }
-
-        //public async Task<List<SalaryModuleDetails>> GetAllSalarySlipAsync()
-        //{
-        //    var salarydeatails = await _dataReposatory.GetAllAsync<SalaryModule>();
-        //    return _mapper.Map<List<SalaryModule>, List<SalaryModuleDetails>>(salarydeatails);
-        //}
-
+        
     }
        
 }

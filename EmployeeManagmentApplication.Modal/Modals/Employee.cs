@@ -37,5 +37,8 @@ namespace EmployeeManagmentApplication.Modal.Modals
         public string PanCard { get; set; }
         public string EmployeeProfilePhoto { get; set; }
         public string Status { get; set; }
+
+     
+         public virtual SalaryModule SalaryModule { get; set; }
     }
 }

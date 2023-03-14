@@ -17,7 +17,7 @@ namespace EmployeeManagmentApplication.Controllers
     public class SalaryModuleController : ControllerBase
     {
        
-        //private readonly ISalaryDataRepository _SalaryDataRepository;
+       
         private readonly ISalaryModuleRepository _SalaryModuleRepository;
         private readonly IMapper _mapper;
         private readonly IWebHostEnvironment _webHostEnvironment;
@@ -30,8 +30,8 @@ namespace EmployeeManagmentApplication.Controllers
             _SalaryModuleRepository = salaryModuleRepository;
             _mapper = mapper;
             _webHostEnvironment = webHostEnvironment;
-          
             _dataRepository = dataRepository;
+
         }
 
 
@@ -94,20 +94,14 @@ namespace EmployeeManagmentApplication.Controllers
                 return BadRequest("Value Enter Invalid");
             }
 
-            var eemp =  _SalaryModuleRepository.SalaryModuleRemoveAsync(id);
+            var eemp =  await _SalaryModuleRepository.SalaryModuleRemoveAsync(id);
 
             return Ok("Remove Successfully");
         }
 
 
 
-        //[HttpGet("GetPaySlip")]
-        //public async Task<ActionResult<SalaryModule>> GetAllSalaryModule()
-        //{
-        //    return Ok(await _SalaryModuleRepository.());
-
-        //}
-
+      
 
     }
 }

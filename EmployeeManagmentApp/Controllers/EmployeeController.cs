@@ -1,16 +1,10 @@
 ﻿using AutoMapper;
 using EmployeeManagmentApplication.Data;
-using EmployeeManagmentApplication.Modal.EmployeeProfile;
 using EmployeeManagmentApplication.Modal.Modals;
 using EmployeeManagmentApplication.Repository;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace EmployeeManagmentApplication.Controllers
@@ -26,7 +20,7 @@ namespace EmployeeManagmentApplication.Controllers
         private readonly IMapper _mapper;
         private readonly IWebHostEnvironment _webHostEnvironment;
 
-
+       
 
         public EmployeeController(IDataReposatory _datarepository, IEmployeeRepository employeeRepository, IMapper mapper, IWebHostEnvironment webHostEnvironment)
         {
@@ -38,6 +32,8 @@ namespace EmployeeManagmentApplication.Controllers
 
         }
 
+
+      
 
         [HttpGet]
         [Route("GetEmployee")]
@@ -91,8 +87,6 @@ namespace EmployeeManagmentApplication.Controllers
 
             return Ok("Remove Successfully");
         }
-
-
 
     }
 

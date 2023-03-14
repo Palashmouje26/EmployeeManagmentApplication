@@ -14,7 +14,7 @@ namespace EmployeeManagmentApplication.Modal.Modals
         public int EmployeeId { get; set; }
         [ForeignKey("EmployeeId")]
 
-        //public virtual Employee Employee { get; set; }
+        public virtual Employee Employee { get; set; }
 
         public double Basic { get; set; }
         [Required]

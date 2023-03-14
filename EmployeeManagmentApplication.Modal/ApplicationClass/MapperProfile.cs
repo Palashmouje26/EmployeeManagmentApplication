@@ -13,6 +13,8 @@ namespace EmployeeManagmentApplication.Modal.ApplicationClass
        {
             CreateMap<EmployeeDetail, Employee>().ReverseMap();
             CreateMap<SalaryModuleDetails, SalaryModule>().ReverseMap();
+            CreateMap<Employee,EmployeePaymentDetail>().ReverseMap();
+            CreateMap<SalaryModule, SalaryModule>().ReverseMap();
             //CreateMap<Employee, SalaryModule>().ReverseMap();
 
         }

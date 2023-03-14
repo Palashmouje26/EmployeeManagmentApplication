@@ -32,7 +32,7 @@ namespace EmployeeManagmentApplication.Repository
 
         public async Task<List<EmployeeDetail>> GetAllEmployeeAsync()
         {
-            var employeeDetails = await _dataReposatory.Where<Employee>(a => a.Status == "Active").ToListAsync();
+            var employeeDetails = await _dataReposatory.Where<Employee>(a => a.Status == "Active").AsNoTracking().ToListAsync();
             return _mapper.Map<List<Employee>, List<EmployeeDetail>>(employeeDetails);
         }
         public async Task<EmployeeDetail> GetEmployeeByIdAsync(int empId)
@@ -71,7 +71,7 @@ namespace EmployeeManagmentApplication.Repository
         }
         public async Task<EmployeeDetail> UpdateEmployeeAsync(EmployeeDetail employeeDetail)
         {
-            var employeeDetails =  _dataReposatory.Where<Employee>(a => a.EmployeeId == employeeDetail.EmployeeId).First();
+            var employeeDetails = await _dataReposatory.FirstAsync<Employee>(a => a.EmployeeId == employeeDetail.EmployeeId);
 
             employeeDetails.EmployeeFirstName = employeeDetail.EmployeeFirstName;
             employeeDetails.EmployeeLastName = employeeDetail.EmployeeLastName;
@@ -91,11 +91,11 @@ namespace EmployeeManagmentApplication.Repository
                 await _dataReposatory.RemoveAsync(empoyeeDetail); 
             }
         
-            await _dataReposatory.RemoveAsync(empoyeeDetail);
          
             return _mapper.Map<EmployeeDetail>(empoyeeDetail);
 
         }
+
 
         private bool EmployeeProfiel(IFormFile employeeprofilePhoto)  // checking the file is jpg ,jpeg and png formate // 
         {
