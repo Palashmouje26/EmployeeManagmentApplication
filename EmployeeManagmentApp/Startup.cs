@@ -36,7 +36,7 @@ namespace EmployeeManagmentApp
             services.AddControllers();
             services.AddScoped<IDataReposatory, DataRepository>();
             services.AddScoped<IEmployeeRepository, EmployeeRepository>();
-            services.AddScoped<ISalaryDataRepository,SalaryDataRepository>();
+           
             services.AddScoped<ISalaryModuleRepository, SalaryModuleRepository>();
             services.AddDbContext<EmployeeDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Default")));
             services.AddSwaggerGen(options =>

@@ -17,20 +17,20 @@ namespace EmployeeManagmentApplication.Controllers
     public class SalaryModuleController : ControllerBase
     {
        
-        private readonly ISalaryDataRepository _SalaryDataRepository;
+        //private readonly ISalaryDataRepository _SalaryDataRepository;
         private readonly ISalaryModuleRepository _SalaryModuleRepository;
         private readonly IMapper _mapper;
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly IDataReposatory _dataRepository;
 
 
-        public SalaryModuleController( ISalaryModuleRepository salaryModuleRepository, IMapper mapper, IWebHostEnvironment webHostEnvironment, ISalaryDataRepository ISalaryDataRepository,IDataReposatory dataRepository)
+        public SalaryModuleController( ISalaryModuleRepository salaryModuleRepository, IMapper mapper, IWebHostEnvironment webHostEnvironment,IDataReposatory dataRepository)
         {
            
             _SalaryModuleRepository = salaryModuleRepository;
             _mapper = mapper;
             _webHostEnvironment = webHostEnvironment;
-           _SalaryDataRepository = ISalaryDataRepository;
+          
             _dataRepository = dataRepository;
         }
 
