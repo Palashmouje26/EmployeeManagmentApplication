@@ -19,6 +19,7 @@ namespace EmployeeManagmentApplication.Repository
         Task<EmployeeDetail> AddEmployeeAsync(EmployeeDetail employee);
 
         Task<EmployeeDetail> UpdateEmployeeAsync(EmployeeDetail employeeDetail);
+        Task UpdateSoftdeleteByStatusAsync(int empId);
         Task<EmployeeDetail> EmployeeRemoveAsync(int id);
 
     }

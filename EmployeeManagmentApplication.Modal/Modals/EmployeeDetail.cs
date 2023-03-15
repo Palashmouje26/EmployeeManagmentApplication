@@ -35,8 +35,8 @@ namespace EmployeeManagmentApplication.Modal.Modals
         [NotMapped]
         public IFormFile Image { get; set; }
         public string EmployeeProfilePhoto;
-        public string Status { get; set; }
+        public bool Status { get; set; }
 
-        public virtual Employee Employee { get; set; }
+        //public virtual Employee Employee { get; set; }
     }
 }

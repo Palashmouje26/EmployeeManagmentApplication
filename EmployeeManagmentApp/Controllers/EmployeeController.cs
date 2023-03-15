@@ -92,7 +92,7 @@ namespace EmployeeManagmentApplication.Controllers
          * @apiBody {String} Adharcard         Mandatory input 12 digit or number.
          * @apiBody {String} Pancard           Mandatory input 10 digit or number with combination with aplphabets.
          * @apiBody {String} EmployeeProfile   upload only jpg,png,jpeg file.
-         * @apiBody {String} Status            employee is Active or Not.
+         * @apiBody {bool} Status              employee is Active or Not.
          */
 
         [HttpPost("AddEmployee")]
@@ -140,23 +140,46 @@ namespace EmployeeManagmentApplication.Controllers
         }
 
         /**
-       * @api {delete} /api/employee /:id get one particuler employee information
-       * @apiName DeleteEmployeeAsync
-       * @apiGroup employee
-       *    
-       * @apiParam {Number} employeeID id of the employee.
-       * 
-       * @apiSuccess {String} firstname Firstname of the employee.
-       * @apiSuccess {String} lastname  Lastname of the employee.
-       * 
+       * @api {put} /employee/ Modify Employee Active or Inactive
+       * @apiName UpdateSoftdeleteAsync
+       * @apiGroup Employee
+       *
+       * @apiParam {Number} id          employee unique ID.
+       
+       *
        * @apiSuccessExample Success-Response:
-       *     {
-       *       Remove Successfully
-       *     }
-       *     
-       * @apiError EmployeeNotFound The id of the employee was not found.
-       * 
+       *  { 
+       *      employeeId = 1,
+       *  }
+       *
        */
+
+
+        [HttpPut("UpdateSoftDeleteById/{Id}")]
+        public async Task<ActionResult> UpdateSoftdeleteAsync(int Id)
+        {
+            await _EmployeeRepository.UpdateSoftdeleteByStatusAsync(Id);
+            return Ok("Update Successfully");
+        }
+
+        /**
+    * @api {delete} /api/employee /:id get one particuler employee information
+    * @apiName DeleteEmployeeAsync
+    * @apiGroup employee
+    *    
+    * @apiParam {Number} employeeID id of the employee.
+    * 
+    * @apiSuccess {String} firstname Firstname of the employee.
+    * @apiSuccess {String} lastname  Lastname of the employee.
+    * 
+    * @apiSuccessExample Success-Response:
+    *     {
+    *       Remove Successfully
+    *     }
+    *     
+    * @apiError EmployeeNotFound The id of the employee was not found.
+    * 
+    */
 
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteEmployeeAsync(int id)
@@ -170,6 +193,8 @@ namespace EmployeeManagmentApplication.Controllers
 
             return Ok("Remove Successfully");
         }
+
+      
         #endregion
     }
 

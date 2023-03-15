@@ -15,7 +15,7 @@ namespace EmployeeManagmentApplication.Repository
 {
     public class EmployeeRepository : IEmployeeRepository
     {
-        
+
         private readonly IDataReposatory _dataReposatory;
         private readonly IMapper _mapper;
         private readonly IWebHostEnvironment _webHostEnvironment;
@@ -30,7 +30,7 @@ namespace EmployeeManagmentApplication.Repository
 
         public async Task<List<EmployeeDetail>> GetAllEmployeeAsync()
         {
-            var employeeDetails = await _dataReposatory.Where<Employee>(a => a.Status == "Active").AsNoTracking().ToListAsync();
+            var employeeDetails = await _dataReposatory.Where<Employee>(a => a.Status).AsNoTracking().ToListAsync();
             return _mapper.Map<List<Employee>, List<EmployeeDetail>>(employeeDetails);
         }
         public async Task<EmployeeDetail> GetEmployeeByIdAsync(int empId)
@@ -51,7 +51,7 @@ namespace EmployeeManagmentApplication.Repository
                     var fileExtenstion = EmployeeProfiel(employee.Image); // file will be checking is extansion formate //
                     if (!fileExtenstion)
                     {
-                        return null ;
+                        return null;
                     }
 
                     var directoryPath = Path.Combine(_webHostEnvironment.ContentRootPath + "\\ProfileImages\\");   // receving the image path tho save //
@@ -82,18 +82,25 @@ namespace EmployeeManagmentApplication.Repository
         }
         public async Task<EmployeeDetail> EmployeeRemoveAsync(int id)
         {
-            var empoyeeDetail = _dataReposatory.FirstOrDefaultAsync<Employee>(a => a.EmployeeId == id); 
-           
-            if (empoyeeDetail != null) 
+            var empoyeeDetail = _dataReposatory.FirstOrDefaultAsync<Employee>(a => a.EmployeeId == id);
+
+            if (empoyeeDetail != null)
             {
-                await _dataReposatory.RemoveAsync(empoyeeDetail); 
+                await _dataReposatory.RemoveAsync(empoyeeDetail);
             }
-        
-         
+
+
             return _mapper.Map<EmployeeDetail>(empoyeeDetail);
 
         }
 
+
+        public async Task UpdateSoftdeleteByStatusAsync(int empId)
+        {
+            var employeeDetail = await _dataReposatory.FirstAsync<Employee>(a => a.EmployeeId == empId);
+            employeeDetail.Status = false;
+            await _dataReposatory.UpdateAsync(employeeDetail);
+        }
 
         /**
         * @api {get} /EmployeeProfiel/:id

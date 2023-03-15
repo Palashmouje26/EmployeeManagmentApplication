@@ -20,7 +20,7 @@ namespace EmployeeManagmentApplication.Modal.Migrations
                     AdharCard = table.Column<string>(nullable: true),
                     PanCard = table.Column<string>(nullable: true),
                     EmployeeProfilePhoto = table.Column<string>(nullable: true),
-                    Status = table.Column<string>(nullable: true)
+                    Status = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {

@@ -26,7 +26,7 @@ namespace EmployeeManagmentApplication.Repository
 
         public async Task<List<EmployeePaymentDetail>> GetAllEmployeepaymentDetailAsync()
         {
-            var salarydeatail = await _dataReposatory.Where<Employee>(a => a.Status == "Active")
+            var salarydeatail = await _dataReposatory.Where<Employee>(a => a.Status)
             .Include(b => b.SalaryModule).ToListAsync();
 
             var data = salarydeatail.Select(a => new EmployeePaymentDetail
