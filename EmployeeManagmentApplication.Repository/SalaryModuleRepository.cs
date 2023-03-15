@@ -31,11 +31,11 @@ namespace EmployeeManagmentApplication.Repository
             var salarydeatail = await _dataReposatory.FirstAsync<SalaryModule>(a => a.SalaryId == empId);
             return _mapper.Map<SalaryModuleDetails>(salarydeatail);
         }
-        public async Task<SalaryModuleDetails> GetSalaryModulesByIDAsync(int salaryId)
-        {
-            var salarydeatail = await _dataReposatory.FirstAsync<SalaryModule>(a => a.EmployeeId == salaryId);
-            return _mapper.Map<SalaryModuleDetails>(salarydeatail);
-        }
+        //public async Task<SalaryModuleDetails> GetSalaryModuleByEmployeeIDAsync(int empId)
+        //{
+        //    var salarydeatail = await _dataReposatory.FirstAsync<SalaryModule>(a => a.EmployeeId == empId);
+        //    return _mapper.Map<SalaryModuleDetails>(salarydeatail);
+        //}
 
         public async Task<SalaryModuleDetails> AddSalaryAsync(SalaryModuleDetails salaryModule)
         {
@@ -98,7 +98,7 @@ namespace EmployeeManagmentApplication.Repository
             return _mapper.Map<SalaryModuleDetails>(salaryModuleDetail);
 
         }
-        
+
     }
        
 }

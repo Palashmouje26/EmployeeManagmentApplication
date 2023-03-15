@@ -18,11 +18,14 @@ namespace EmployeeManagmentApplication.Modal.Modals
         public string Address { get; set; }
 
         public string PhoneNumber { get; set; }
+
+
         public double? Basic { get; set; }
         public double HRA { get; set; }
         public double DA { get; set; }
         public double PT { get; set; }
         public double Deduction { get; set; }
         public double NetSalary { get; set; }
+
     }
 }

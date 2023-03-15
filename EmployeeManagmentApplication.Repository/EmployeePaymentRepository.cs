@@ -1,15 +1,10 @@
 ﻿using AutoMapper;
 using EmployeeManagmentApplication.Data;
-using EmployeeManagmentApplication.Modal.EmployeeProfile;
 using EmployeeManagmentApplication.Modal.Modals;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Hosting;
 
 namespace EmployeeManagmentApplication.Repository
 {
@@ -21,19 +16,18 @@ namespace EmployeeManagmentApplication.Repository
         private readonly IMapper _mapper;
 
 
-        public EmployeePaymentRepository(IDataReposatory dataReposatory, IMapper mapper, IEmployeeRepository employeeRepository)
+        public EmployeePaymentRepository(IDataReposatory dataReposatory, IMapper mapper, IEmployeeRepository employeeRepository, ISalaryModuleRepository SalaryModuleRepository)
         {
-
             _dataReposatory = dataReposatory;
             _mapper = mapper;
             _EmployeeRepository = employeeRepository;
-
+            _SalaryModuleRepository = SalaryModuleRepository;
         }
 
         public async Task<List<EmployeePaymentDetail>> GetAllEmployeepaymentDetailAsync()
         {
             var salarydeatail = await _dataReposatory.Where<Employee>(a => a.Status == "Active")
-            .Include(a => a.SalaryModule).ToListAsync();
+            .Include(b => b.SalaryModule).ToListAsync();
 
             var data = salarydeatail.Select(a => new EmployeePaymentDetail
             {
@@ -43,41 +37,80 @@ namespace EmployeeManagmentApplication.Repository
                 EmailId = a.EmailId,
                 Address = a.Address,
                 PhoneNumber = a.PhoneNumber,
-                Basic = calculate(a),
-               
+                Basic = a.SalaryModule.Basic,
+                HRA = a.SalaryModule.HRA,
+                DA = a.SalaryModule.DA,
+                Deduction = a.SalaryModule.Deduction,
+                PT = a.SalaryModule.PT,
+                NetSalary = a.SalaryModule.NetSalary
 
             }).ToList();
             return data;
+
             //return new EmployeePaymentDetail();
             //return _mapper.Map<EmployeeDetail, EmployeePaymentDetail>(salarydeatail);
         }
 
-        private double calculate(Employee a)
-        {
-            if (a.SalaryModule != null)
-                return a.SalaryModule.Basic;
-               
-           
 
-            return 0;
-        }
 
-       
         public async Task<EmployeePaymentDetail> GetEmployeepaymentDetailByIdAsync(int empId)
         {
+            // // first 
+            // var employeePaymentDetail = await GetAllEmployeepaymentDetailAsync();
+            // var employee = employeePaymentDetail.First(a => a.EmployeeId == empId);
+            // return employee;
+
+            // // second
+            // var salarydeatail = await _dataReposatory.Where<Employee>(a => a.Status == "Active" && a.EmployeeId == empId)
+            //.Include(b => b.SalaryModule).FirstOrDefaultAsync();
+
+            // var data = new EmployeePaymentDetail
+            // {
+            //     EmployeeId = salarydeatail.EmployeeId,
+            //     EmployeeFirstName = salarydeatail.EmployeeFirstName,
+            //     EmployeeLastName = salarydeatail.EmployeeLastName,
+            //     EmailId = salarydeatail.EmailId,
+            //     Address = salarydeatail.Address,
+            //     PhoneNumber = salarydeatail.PhoneNumber,
+            //     Basic = salarydeatail.SalaryModule.Basic,
+            //     HRA = salarydeatail.SalaryModule.HRA,
+            //     DA = salarydeatail.SalaryModule.DA,
+            //     Deduction = salarydeatail.SalaryModule.Deduction,
+            //     PT = salarydeatail.SalaryModule.PT,
+            //     NetSalary = salarydeatail.SalaryModule.NetSalary
+            // };
+            //return data;
+
+            // third
             var EmployeeDetail = await _EmployeeRepository.GetEmployeeByIdAsync(empId);
-            var salaryDetail = await _SalaryModuleRepository.GetSalaryModulesByIDAsync(empId);
-            EmployeePaymentDetail employeePaymentDetail = new EmployeePaymentDetail
+            var salaryDetail = await _SalaryModuleRepository.GetSalaryModuleByIDAsync(empId);
+
+            EmployeePaymentDetail employeePaymentDetail1 = new EmployeePaymentDetail
             {
                 EmployeeId = empId,
                 EmployeeFirstName = EmployeeDetail.EmployeeFirstName,
                 EmployeeLastName = EmployeeDetail.EmployeeLastName,
                 EmailId = EmployeeDetail.EmailId,
-                Basic= salaryDetail.Basic
-                
-                
+                PhoneNumber = EmployeeDetail.PhoneNumber,
+                Address = EmployeeDetail.Address,
+                Basic = salaryDetail.Basic,
+                HRA = salaryDetail.HRA,
+                DA = salaryDetail.DA,
+                Deduction= salaryDetail.Deduction,
+                PT = salaryDetail.PT,
+                NetSalary= salaryDetail.NetSalary
             };
-            return employeePaymentDetail;
+
+            return employeePaymentDetail1;
         }
+
+        //private SalaryModule calculate(Employee a)
+        //{
+        //    if (a.SalaryModule != null)
+        //        return a.SalaryModule;
+        //    return null;
+        //}
+    
+
     }
 }

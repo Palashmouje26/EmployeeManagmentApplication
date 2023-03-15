@@ -12,8 +12,8 @@ namespace EmployeeManagmentApplication.Modal.Modals
         public int SalaryId { get; set; }
 
         public int EmployeeId { get; set; }
-        [ForeignKey("EmployeeId")]
 
+        [ForeignKey("EmployeeId")]
         public virtual Employee Employee { get; set; }
 
         public double Basic { get; set; }
@@ -27,5 +27,6 @@ namespace EmployeeManagmentApplication.Modal.Modals
         public double Deduction { get; set; }
         [Required]
         public double NetSalary { get; set; }
+
     }
 }

@@ -15,8 +15,6 @@ namespace EmployeeManagmentApplication.Repository
 {
     public class EmployeeRepository : IEmployeeRepository
     {
-        private readonly EmployeeRepository _EmployeeRepository;
-
         
         private readonly IDataReposatory _dataReposatory;
         private readonly IMapper _mapper;

@@ -15,8 +15,15 @@ namespace EmployeeManagmentApplication.Modal.Modals
 
         public double Basic { get; set; }
 
+        public double HRA { get; set; }
+        public double DA { get; set; }
+   
+        public double PT { get; set; }
 
+        public double Deduction { get; set; }
 
-        //public virtual ICollection<Employee> Employee { get; set; }
+        public double NetSalary { get; set; }
+
+        
     }
 }
