@@ -95,6 +95,10 @@ namespace EmployeeManagmentApplication.Repository
         }
 
 
+        /**
+        * @api {get} /EmployeeProfiel/:id
+        * @apiPrivate
+        */
         private bool EmployeeProfiel(IFormFile employeeprofilePhoto)  // checking the file is jpg ,jpeg and png formate // 
         {
             var supportedtype = new[] { ".jpg", ".jpeg", ".png" };
