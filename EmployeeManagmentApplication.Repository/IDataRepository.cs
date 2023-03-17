@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace EmployeeManagmentApplication.Data
 {
-    public interface IDataReposatory
+    public interface IDataRepository
     {
         
 

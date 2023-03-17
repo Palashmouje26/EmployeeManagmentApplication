@@ -10,20 +10,24 @@ namespace EmployeeManagmentApplication.Repository
 {
     public class EmployeePaymentRepository : IEmployeePaymentRepository
     {
+        #region Privet Members
         private readonly IEmployeeRepository _EmployeeRepository;
         private readonly ISalaryModuleRepository _SalaryModuleRepository;
-        private readonly IDataReposatory _dataReposatory;
+        private readonly IDataRepository _dataReposatory;
         private readonly IMapper _mapper;
+        #endregion
 
-
-        public EmployeePaymentRepository(IDataReposatory dataReposatory, IMapper mapper, IEmployeeRepository employeeRepository, ISalaryModuleRepository SalaryModuleRepository)
+        #region Constructor
+        public EmployeePaymentRepository(IDataRepository dataReposatory, IMapper mapper, IEmployeeRepository employeeRepository, ISalaryModuleRepository SalaryModuleRepository)
         {
             _dataReposatory = dataReposatory;
             _mapper = mapper;
             _EmployeeRepository = employeeRepository;
             _SalaryModuleRepository = SalaryModuleRepository;
         }
+        #endregion
 
+        #region Public Methods
         public async Task<List<EmployeePaymentDetail>> GetAllEmployeepaymentDetailAsync()
         {
             var salarydeatail = await _dataReposatory.Where<Employee>(a => a.Status)
@@ -104,13 +108,7 @@ namespace EmployeeManagmentApplication.Repository
             return employeePaymentDetail1;
         }
 
-        //private SalaryModule calculate(Employee a)
-        //{
-        //    if (a.SalaryModule != null)
-        //        return a.SalaryModule;
-        //    return null;
-        //}
-    
+        #endregion
 
     }
 }

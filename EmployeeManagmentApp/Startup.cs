@@ -34,7 +34,7 @@ namespace EmployeeManagmentApp
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddScoped<IDataReposatory, DataRepository>();
+            services.AddScoped<IDataRepository, DataRepository>();
             services.AddScoped<IEmployeeRepository, EmployeeRepository>();
             services.AddScoped<ISalaryModuleRepository, SalaryModuleRepository>();
             services.AddScoped<IEmployeePaymentRepository, EmployeePaymentRepository>();

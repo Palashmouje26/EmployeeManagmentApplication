@@ -16,23 +16,23 @@ namespace EmployeeManagmentApplication.Controllers
     [ApiController]
     public class SalaryModuleController : ControllerBase
     {
-       
-       
+
+        #region Private Member
         private readonly ISalaryModuleRepository _SalaryModuleRepository;
-        private readonly IMapper _mapper;
-        private readonly IWebHostEnvironment _webHostEnvironment;
-        private readonly IDataReposatory _dataRepository;
+   
+        #endregion
 
-
-        public SalaryModuleController( ISalaryModuleRepository salaryModuleRepository, IMapper mapper, IWebHostEnvironment webHostEnvironment,IDataReposatory dataRepository)
+        #region Constructor
+        public SalaryModuleController( ISalaryModuleRepository salaryModuleRepository)
         {
            
             _SalaryModuleRepository = salaryModuleRepository;
-            _mapper = mapper;
-            _webHostEnvironment = webHostEnvironment;
-            _dataRepository = dataRepository;
+         
 
         }
+        #endregion
+
+        #region Public Methods
                 /**
         * @api {get} /api/SalaryModule /:get all employee Salary information
         * @apiName GetSalaryModuleAsync
@@ -55,7 +55,7 @@ namespace EmployeeManagmentApplication.Controllers
         */
         [HttpGet("GetSalaryModule")]
     
-        public async Task<ActionResult<SalaryModule>> GetSalaryModuleAsync()
+        public async Task<ActionResult<List<SalaryModuleDetails>>> GetSalaryModuleAsync()
         {
             return Ok(await _SalaryModuleRepository.GetAllSalaryModuleAsync());
    
@@ -150,15 +150,15 @@ namespace EmployeeManagmentApplication.Controllers
             return Ok("Updated Successfully");
         }
 
-        /**
-      * @api {delete} /api/SalaryModule /:id get one particuler employee information
-      * @apiName DeleteSalaryAsync
-      * @apiGroup employee
-      *    
-      * @apiRoute {Number} SalaryID id of the SalaryModule
-      *
-      * @apiSuccess 200 OK.
-      */
+            /**
+          * @api {delete} /api/SalaryModule /:id get one particuler employee information
+          * @apiName DeleteSalaryAsync
+          * @apiGroup employee
+          *    
+          * @apiRoute {Number} SalaryID id of the SalaryModule
+          *
+          * @apiSuccess 200 OK.
+          */
 
         [HttpDelete("DeleteSalaryModule")]
         public async Task<ActionResult> DeleteSalaryAsync(int id)
@@ -173,9 +173,9 @@ namespace EmployeeManagmentApplication.Controllers
             return Ok("Remove Successfully");
         }
 
+        #endregion
 
 
-      
 
     }
 }

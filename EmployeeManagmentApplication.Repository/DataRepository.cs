@@ -12,9 +12,12 @@ using System.Threading.Tasks;
 
 namespace EmployeeManagmentApplication.Data
 {
-    public class DataRepository : IDataReposatory
+    public class DataRepository : IDataRepository
     {
+        #region Private Member
         private readonly EmployeeDBContext _DBContext;
+        #endregion
+
         public DataRepository(EmployeeDBContext dbContext)
         {
             _DBContext = dbContext;

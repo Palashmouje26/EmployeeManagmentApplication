@@ -15,18 +15,24 @@ namespace EmployeeManagmentApplication.Repository
 {
     public class EmployeeRepository : IEmployeeRepository
     {
-
-        private readonly IDataReposatory _dataReposatory;
+        #region Private Member
+        private readonly IDataRepository _dataReposatory;
         private readonly IMapper _mapper;
         private readonly IWebHostEnvironment _webHostEnvironment;
+        #endregion
 
-        public EmployeeRepository(IDataReposatory dataReposatory, IMapper mapper, IWebHostEnvironment webHostEnvironment)
+
+        #region Constructor
+        public EmployeeRepository(IDataRepository dataReposatory, IMapper mapper, IWebHostEnvironment webHostEnvironment)
         {
             //_DBContext = dbcontext;
             _dataReposatory = dataReposatory;
             _mapper = mapper;
             _webHostEnvironment = webHostEnvironment;
         }
+        #endregion
+
+        #region Public Method
 
         public async Task<List<EmployeeDetail>> GetAllEmployeeAsync()
         {
@@ -39,11 +45,13 @@ namespace EmployeeManagmentApplication.Repository
             return _mapper.Map<EmployeeDetail>(employeeDetail);
 
         }
+
         public async Task<EmployeeDetail> AddEmployeeAsync(EmployeeDetail employee)
         {
             var newEmployee = _mapper.Map<EmployeeDetail, Employee>(employee);
             newEmployee.EmployeeId = 0;
 
+            // upload images file //
             if (newEmployee.EmployeeId == 0)
             {
                 if (employee.Image.Length <= 2097152)  // File size checking up to 2 mb  //
@@ -69,6 +77,7 @@ namespace EmployeeManagmentApplication.Repository
         }
         public async Task<EmployeeDetail> UpdateEmployeeAsync(EmployeeDetail employeeDetail)
         {
+            
             var employeeDetails = await _dataReposatory.FirstAsync<Employee>(a => a.EmployeeId == employeeDetail.EmployeeId);
 
             employeeDetails.EmployeeFirstName = employeeDetail.EmployeeFirstName;
@@ -116,6 +125,6 @@ namespace EmployeeManagmentApplication.Repository
             }
             return true;
         }
-
+        #endregion
     }
 }

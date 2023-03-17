@@ -12,14 +12,19 @@ namespace EmployeeManagmentApplication.Repository
 {
     public class SalaryModuleRepository : ISalaryModuleRepository
     {
-        private readonly IDataReposatory _dataReposatory;
+        #region Privet Memebar
+        private readonly IDataRepository _dataReposatory;
         private readonly IMapper _mapper;
-        public SalaryModuleRepository(IDataReposatory dataReposatory, IMapper mapper)
+        #endregion
+        #region Constructor
+        public SalaryModuleRepository(IDataRepository dataReposatory, IMapper mapper)
         {
             _dataReposatory = dataReposatory;
             _mapper = mapper;
         }
+        #endregion
 
+        #region Public Methods
         public async Task<List<SalaryModuleDetails>> GetAllSalaryModuleAsync()
         {
             var salarydeatails = await _dataReposatory.GetAllAsync<SalaryModule>();
@@ -31,17 +36,13 @@ namespace EmployeeManagmentApplication.Repository
             var salarydeatail = await _dataReposatory.FirstAsync<SalaryModule>(a => a.SalaryId == empId);
             return _mapper.Map<SalaryModuleDetails>(salarydeatail);
         }
-        //public async Task<SalaryModuleDetails> GetSalaryModuleByEmployeeIDAsync(int empId)
-        //{
-        //    var salarydeatail = await _dataReposatory.FirstAsync<SalaryModule>(a => a.EmployeeId == empId);
-        //    return _mapper.Map<SalaryModuleDetails>(salarydeatail);
-        //}
+     
 
         public async Task<SalaryModuleDetails> AddSalaryAsync(SalaryModuleDetails salaryModule)
         {
             var newSalary = _mapper.Map<SalaryModule>(salaryModule);
             newSalary.SalaryId = 0;
-
+            // Salary Calculation part //
             var HRA = salaryModule.Basic + 1000;
             var DA = salaryModule.Basic * 10 / 100;
             var PT = 200;
@@ -98,7 +99,7 @@ namespace EmployeeManagmentApplication.Repository
             return _mapper.Map<SalaryModuleDetails>(salaryModuleDetail);
 
         }
-
+        #endregion
     }
-       
+
 }

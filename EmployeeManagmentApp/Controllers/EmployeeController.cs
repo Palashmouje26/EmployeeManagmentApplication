@@ -15,23 +15,20 @@ namespace EmployeeManagmentApplication.Controllers
     public class EmployeeController : ControllerBase
     {
         #region Private Members
-        private readonly IDataReposatory _DataReposatory;
+        
         private readonly IEmployeeRepository _EmployeeRepository;
-        private readonly IMapper _mapper;
-        private readonly IWebHostEnvironment _webHostEnvironment;
-
        
+        #endregion
 
-        public EmployeeController(IDataReposatory _datarepository, IEmployeeRepository employeeRepository, IMapper mapper, IWebHostEnvironment webHostEnvironment)
-        {
-
-            _DataReposatory = _datarepository;
+        #region Constructor
+        public EmployeeController( IEmployeeRepository employeeRepository)
+        {         
             _EmployeeRepository = employeeRepository;
-            _mapper = mapper;
-            _webHostEnvironment = webHostEnvironment;
 
         }
+        #endregion
 
+        #region Public Methods
         /**
     * @api {get} /api/employee /:get all employee information
     * @apiName GetEmployeeAsync
@@ -53,7 +50,7 @@ namespace EmployeeManagmentApplication.Controllers
     * 
     */
         [HttpGet("GetEmployee")]
-        public async Task<IActionResult> GetEmployeeAsync()
+        public async Task<ActionResult> GetEmployeeAsync()
         {
             return Ok(await _EmployeeRepository.GetAllEmployeeAsync());
         }
