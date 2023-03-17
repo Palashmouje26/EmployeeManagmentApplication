@@ -85,6 +85,25 @@ namespace EmployeeManagmentApp.Test.Controller
             //Assert
             Assert.NotNull(employee);
         }
+        [Fact]
+        public async Task DeleteEmployeeAsync_RemoveSoft()
+        {
+            // Arrange
+            int testId = 2;
 
+            _employeeRepository.Setup(repo => repo.EmployeeRemoveAsync(It.IsAny<int>()))
+                   .ReturnsAsync();
+
+           
+
+            // Act
+            var result = await _employeeController.DeleteEmployeeAsync(testId);
+
+            // Assert
+            var redirectToActionResult = Assert.IsType<RedirectToActionResult>(result);
+            Assert.Null(redirectToActionResult.ControllerName);
+            Assert.Equal("Read", redirectToActionResult.ActionName);
+            _employeeRepository.Verify();
+        }
     }
 }

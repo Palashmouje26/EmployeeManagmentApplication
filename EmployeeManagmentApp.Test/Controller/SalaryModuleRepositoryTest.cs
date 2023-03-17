@@ -41,12 +41,30 @@ namespace EmployeeManagmentApp.Test.Controller
             var result = await _SalaryModuleController.GetSalaryModuleAsync();
 
             //Assert
-
-            //Assert.IsType<Acti<SalaryModule>>(result.Value);
             var value = result.Result as OkObjectResult;
             var value2 = value.Value as List<SalaryModuleDetails>;
             Assert.Equal(2, value2.Count);
         }
+        [Fact]
+        public async Task GetSalaryModuleByIDAsync_ShouldReturnEmployee()
+        {
+
+            //Arrange
+            var SalaryModuleDetails = new SalaryModuleDetails
+            {
+                SalaryId = 1,
+                EmployeeId =1,
+                Basic= 2000
+            };
+            _SalaryModuleRepository.Setup(x => x.GetSalaryModuleByIDAsync(SalaryModuleDetails.SalaryId)).ReturnsAsync(SalaryModuleDetails);
+
+            //Act
+            var result = await _SalaryModuleController.GetSalaryModuleByIDAsync(1);
+
+            //Assert
+            Assert.NotNull(result);
+        }
+
     }
 
 }

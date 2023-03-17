@@ -23,7 +23,10 @@ namespace EmployeeManagmentApplication.Repository
             _mapper = mapper;
         }
         #endregion
-
+        /// <summary>
+        /// This Method is used for showing all list of employee with details
+        /// </summary>
+        /// <returns></returns>
         #region Public Methods
         public async Task<List<SalaryModuleDetails>> GetAllSalaryModuleAsync()
         {
@@ -31,12 +34,22 @@ namespace EmployeeManagmentApplication.Repository
             return _mapper.Map<List<SalaryModule>, List<SalaryModuleDetails>>(salarydeatails);   
         }
 
+        /// <summary>
+        /// This Method is used for showing List of employee with salary details
+        /// </summary>
+        /// <param name="empId"></param>
+        /// <returns>>List of partucular employee with their Salary <returns>
         public async Task<SalaryModuleDetails> GetSalaryModuleByIDAsync(int empId)
         {
             var salarydeatail = await _dataReposatory.FirstAsync<SalaryModule>(a => a.SalaryId == empId);
             return _mapper.Map<SalaryModuleDetails>(salarydeatail);
         }
-     
+
+        /// <summary>
+        /// This Methods Add salary Module
+        /// </summary>
+        /// <param name="salaryModule"></param>
+        /// <returns></returns>
 
         public async Task<SalaryModuleDetails> AddSalaryAsync(SalaryModuleDetails salaryModule)
         {
@@ -62,7 +75,11 @@ namespace EmployeeManagmentApplication.Repository
             await _dataReposatory.AddAsync(salaryDetal);
             return _mapper.Map<SalaryModuleDetails>(newSalary);
         }
-        
+        /// <summary>
+        /// This Methods is Updating The ssalry Module of Particulr Employee
+        /// </summary>
+        /// <param name="salaryModuledetail">Currunt salary Id </param>
+        /// <returns>Upadted Salary Module</returns>
         public async Task<SalaryModuleDetails> UpdateSalaryModuleAsync(SalaryModuleDetails salaryModuledetail )
         {
             var salaryModuleDetails = await _dataReposatory.FirstOrDefaultAsync<SalaryModule>(a => a.SalaryId == salaryModuledetail.SalaryId);
@@ -87,6 +104,11 @@ namespace EmployeeManagmentApplication.Repository
             await _dataReposatory.UpdateAsync(salaryModuleDetails);
             return _mapper.Map<SalaryModuleDetails>(salaryModuleDetails);
         }
+        /// <summary>
+        /// This Method is remove the Salary Module 
+        /// </summary>
+        /// <param name="id">with the help or salary Id </param>
+        /// <returns>Remove the Salary of particular employee</returns>
         public async Task<SalaryModuleDetails> SalaryModuleRemoveAsync(int id)
         {
             var salaryModuleDetail = await _dataReposatory.FirstOrDefaultAsync<SalaryModule>(a => a.SalaryId == id);

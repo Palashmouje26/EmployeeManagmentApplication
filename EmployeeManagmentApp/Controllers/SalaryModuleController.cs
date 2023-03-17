@@ -91,9 +91,9 @@ namespace EmployeeManagmentApplication.Controllers
     * @api {post} /SalaryModule/ add or insert new salary Module 
     * @apiName AddSalaryModuleAsync
     * @apiGroup SalaryModuyle
-    * @apiBody {int} salaryId             Mandatory salaryId  of the SalaryModule.
-    * @apiBody {int} EmployeeId           Mandatory insert employeeId for the particular employee
-    * @apiBody {double} Basic             Mandatory basic Salary for the employee.
+    * @apiBody {int} salaryId             Mandatory to insert salaryId  of the SalaryModule.
+    * @apiBody {int} EmployeeId           Mandatory to insert employeeId for the particular employee
+    * @apiBody {double} Basic             Mandatory to insert basic Salary  for the employee.
     * @apiBody {double} HRA               Optional to insert.
     * @apiBody {double} DA                Optional to insert.
     * @apiBody {double} PT                Optional to insert.
@@ -128,9 +128,7 @@ namespace EmployeeManagmentApplication.Controllers
         *       "EmployeeId": "1",
         *       "Basic: "2000"
         *     }
-        *   
         *  }
-        *
         * @apiUse SalaryNotFoundError
         */
 

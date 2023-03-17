@@ -26,7 +26,10 @@ namespace EmployeeManagmentApplication.Repository
             _SalaryModuleRepository = SalaryModuleRepository;
         }
         #endregion
-
+        /// <summary>
+        /// This Method Is for showing List of All employee with salary deatils
+        /// </summary>
+        /// <returns>List of employee searched </returns>
         #region Public Methods
         public async Task<List<EmployeePaymentDetail>> GetAllEmployeepaymentDetailAsync()
         {
@@ -56,7 +59,11 @@ namespace EmployeeManagmentApplication.Repository
         }
 
 
-
+        /// <summary>
+        /// This Method was list of particular employee
+        /// </summary>
+        /// <param name="empId"></param>
+        /// <returns></returns>
         public async Task<EmployeePaymentDetail> GetEmployeepaymentDetailByIdAsync(int empId)
         {
             // // first 
@@ -69,6 +76,7 @@ namespace EmployeeManagmentApplication.Repository
             //.Include(b => b.SalaryModule).FirstOrDefaultAsync();
 
             // var data = new EmployeePaymentDetail
+
             // {
             //     EmployeeId = salarydeatail.EmployeeId,
             //     EmployeeFirstName = salarydeatail.EmployeeFirstName,

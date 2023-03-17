@@ -33,19 +33,32 @@ namespace EmployeeManagmentApplication.Repository
         #endregion
 
         #region Public Method
-
+        /// <summary>
+        /// This method is used for showing all list employee
+        /// </summary>
+        /// <returns>returs to showing list </returns>
         public async Task<List<EmployeeDetail>> GetAllEmployeeAsync()
         {
             var employeeDetails = await _dataReposatory.Where<Employee>(a => a.Status).AsNoTracking().ToListAsync();
             return _mapper.Map<List<Employee>, List<EmployeeDetail>>(employeeDetails);
         }
+
+        /// <summary>
+        /// This method is used for showing one employee detail useing employeeId
+        /// </summary>
+        /// <param name="empId"></param>
+        /// <returns>return to show result </returns>
         public async Task<EmployeeDetail> GetEmployeeByIdAsync(int empId)
         {
             var employeeDetail = await _dataReposatory.FirstAsync<Employee>(a => a.EmployeeId == empId);
             return _mapper.Map<EmployeeDetail>(employeeDetail);
 
         }
-
+        /// <summary>
+        ///This method used for to add Employee
+        /// </summary>
+        /// <param name="employee"></param>
+        /// <returns>It returns result</returns>
         public async Task<EmployeeDetail> AddEmployeeAsync(EmployeeDetail employee)
         {
             var newEmployee = _mapper.Map<EmployeeDetail, Employee>(employee);
@@ -54,15 +67,15 @@ namespace EmployeeManagmentApplication.Repository
             // upload images file //
             if (newEmployee.EmployeeId == 0)
             {
-                if (employee.Image.Length <= 2097152)  // File size checking up to 2 mb  //
+                if (employee.Image.Length <= 2097152)  // File size checking up to 2 mb  
                 {
-                    var fileExtenstion = EmployeeProfiel(employee.Image); // file will be checking is extansion formate //
+                    var fileExtenstion = EmployeeProfiel(employee.Image); // file will be checking is extansion formate 
                     if (!fileExtenstion)
                     {
                         return null;
                     }
 
-                    var directoryPath = Path.Combine(_webHostEnvironment.ContentRootPath + "\\ProfileImages\\");   // receving the image path tho save //
+                    var directoryPath = Path.Combine(_webHostEnvironment.ContentRootPath + "\\ProfileImages\\"); // receving the image path tho save //
                     var filePath = Path.Combine(directoryPath, employee.Image.FileName);
                     using (var stream = new FileStream(filePath, FileMode.Create))
                     {
@@ -75,6 +88,12 @@ namespace EmployeeManagmentApplication.Repository
             return _mapper.Map<Employee, EmployeeDetail>(newEmployee);
 
         }
+
+        /// <summary>
+        /// This Method is updating employee details 
+        /// </summary>
+        /// <param name="employeeDetail"></param>
+        /// <returns>It retuns the result</returns>
         public async Task<EmployeeDetail> UpdateEmployeeAsync(EmployeeDetail employeeDetail)
         {
             
@@ -89,6 +108,11 @@ namespace EmployeeManagmentApplication.Repository
 
 
         }
+        /// <summary>
+        /// This Method is Hardly Details using employe Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>It returns the false </returns>
         public async Task<EmployeeDetail> EmployeeRemoveAsync(int id)
         {
             var empoyeeDetail = _dataReposatory.FirstOrDefaultAsync<Employee>(a => a.EmployeeId == id);
@@ -103,7 +127,11 @@ namespace EmployeeManagmentApplication.Repository
 
         }
 
-
+        /// <summary>
+        /// This Method is soft remove 
+        /// </summary>
+        /// <param name="empId"></param>
+        /// <returns>It returns the true and false</returns>
         public async Task UpdateSoftdeleteByStatusAsync(int empId)
         {
             var employeeDetail = await _dataReposatory.FirstAsync<Employee>(a => a.EmployeeId == empId);
