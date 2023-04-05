@@ -9,7 +9,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using EmployeeManagmentApplicationRepository.Data;
-using EmployeeManagmentApplication.Modal.Models.Employee;
+using EmployeeManagmentApplication.Modal.Models.EmployeeManagment;
 using EmployeeManagmentApplication.Modal.ApplicationClass.DTO.EmployeeDetailsDTO;
 
 namespace EmployeeManagmentApplication.Repository.EmployeeManagmentRepository

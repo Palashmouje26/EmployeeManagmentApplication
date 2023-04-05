@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
-using EmployeeManagmentApplication.Modal.Models.Employee;
+using EmployeeManagmentApplication.Modal.Models.EmployeeManagment;
 
 namespace EmployeeManagmentApplication.Modal.Models.Salary
 {
@@ -12,9 +9,9 @@ namespace EmployeeManagmentApplication.Modal.Models.Salary
         [Key]
         public int SalaryId { get; set; }
 
-        public int EmployeeId { get; set; }
-
         [ForeignKey("EmployeeId")]
+        public int EmployeeId { get; set; }
+        
         public virtual Employee Employee { get; set; }
 
         public double Basic { get; set; }

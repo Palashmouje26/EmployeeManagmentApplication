@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using EmployeeManagmentApplication.Modal.ApplicationClass.DTO.EmployeePaymentDetailsDTO;
-using EmployeeManagmentApplication.Modal.Models.Employee;
+using EmployeeManagmentApplication.Modal.Models.EmployeeManagment;
 using EmployeeManagmentApplication.Repository.EmployeeManagmentRepository;
 using EmployeeManagmentApplicationRepository.Data;
 using EmployeeManagmentApplicationRepository.Salary;

@@ -1,4 +1,4 @@
-﻿using EmployeeManagmentApplication.Modal.Models.Employee;
+﻿using EmployeeManagmentApplication.Modal.Models.EmployeeManagment;
 using EmployeeManagmentApplication.Modal.Models.Salary;
 using Microsoft.EntityFrameworkCore;
 using System;

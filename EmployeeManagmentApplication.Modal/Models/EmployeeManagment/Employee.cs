@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
-namespace EmployeeManagmentApplication.Modal.Models.Employee
+namespace EmployeeManagmentApplication.Modal.Models.EmployeeManagment
 {
     public class Employee
     {

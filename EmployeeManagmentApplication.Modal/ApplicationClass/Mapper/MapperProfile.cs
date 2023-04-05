@@ -2,7 +2,7 @@
 using EmployeeManagmentApplication.Modal.ApplicationClass.DTO.EmployeeDetailsDTO;
 using EmployeeManagmentApplication.Modal.ApplicationClass.DTO.EmployeePaymentDetailsDTO;
 using EmployeeManagmentApplication.Modal.ApplicationClass.DTO.SalaryDetailsDTO;
-using EmployeeManagmentApplication.Modal.Models.Employee;
+using EmployeeManagmentApplication.Modal.Models.EmployeeManagment;
 using EmployeeManagmentApplication.Modal.Models.Salary;
 using Microsoft.Extensions.Configuration;
 using System;
