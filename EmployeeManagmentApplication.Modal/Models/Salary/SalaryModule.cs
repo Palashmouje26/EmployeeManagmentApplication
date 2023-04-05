@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
+using EmployeeManagmentApplication.Modal.Models.Employee;
 
-namespace EmployeeManagmentApplication.Modal.Modals
+namespace EmployeeManagmentApplication.Modal.Models.Salary
 {
     public class SalaryModule
     {

@@ -5,9 +5,9 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
-namespace EmployeeManagmentApplication.Modal.Modals
+namespace EmployeeManagmentApplication.Modal.ApplicationClass.DTO.EmployeePaymentDetailsDTO
 {
-    public class EmployeePaymentDetail
+    public class EmployeePaymentDetailsDTO
     {
         public int EmployeeId { get; set; }
 

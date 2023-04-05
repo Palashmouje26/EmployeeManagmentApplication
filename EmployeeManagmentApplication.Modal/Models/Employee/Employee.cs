@@ -1,11 +1,12 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using EmployeeManagmentApplication.Modal.Models.Salary;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
-namespace EmployeeManagmentApplication.Modal.Modals
+namespace EmployeeManagmentApplication.Modal.Models.Employee
 {
     public class Employee
     {
@@ -37,7 +38,7 @@ namespace EmployeeManagmentApplication.Modal.Modals
         public string PanCard { get; set; }
         public string EmployeeProfilePhoto { get; set; }
         public bool Status { get; set; }
-        
+
         public virtual SalaryModule SalaryModule { get; set; }
     }
 }

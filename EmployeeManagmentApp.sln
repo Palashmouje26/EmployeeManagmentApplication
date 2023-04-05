@@ -7,11 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmployeeManagmentApplicatio
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmployeeManagmentApplication.Modal", "EmployeeManagmentApplication.Modal\EmployeeManagmentApplication.Modal.csproj", "{45E4DE16-1C2A-4760-9A9F-56F3346E75E3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmployeeManagmentApplication.Repository", "EmployeeManagmentApplication.Repository\EmployeeManagmentApplication.Repository.csproj", "{6C349002-D255-4DFF-97DC-63EAA756A30C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmployeeManagmentApplicationRepository", "EmployeeManagmentApplication.Repository\EmployeeManagmentApplicationRepository.csproj", "{6C349002-D255-4DFF-97DC-63EAA756A30C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmployeeManagmentApplication.Data", "EmployeeManagmentApplication.Data\EmployeeManagmentApplication.Data.csproj", "{4BEDF4FA-4D46-40B5-8231-4D78F143168E}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmployeeManagmentApp.Test", "EmployeeManagmentApp.Test\EmployeeManagmentApp.Test.csproj", "{F36FDBE9-37E4-4942-AB13-A8EEF93D1B48}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmployeeManagmentApp.Test", "EmployeeManagmentApp.Test\EmployeeManagmentApp.Test.csproj", "{F36FDBE9-37E4-4942-AB13-A8EEF93D1B48}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,10 +29,6 @@ Global
 		{6C349002-D255-4DFF-97DC-63EAA756A30C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6C349002-D255-4DFF-97DC-63EAA756A30C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6C349002-D255-4DFF-97DC-63EAA756A30C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4BEDF4FA-4D46-40B5-8231-4D78F143168E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4BEDF4FA-4D46-40B5-8231-4D78F143168E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4BEDF4FA-4D46-40B5-8231-4D78F143168E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4BEDF4FA-4D46-40B5-8231-4D78F143168E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F36FDBE9-37E4-4942-AB13-A8EEF93D1B48}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F36FDBE9-37E4-4942-AB13-A8EEF93D1B48}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F36FDBE9-37E4-4942-AB13-A8EEF93D1B48}.Release|Any CPU.ActiveCfg = Release|Any CPU

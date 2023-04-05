@@ -4,9 +4,9 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
-namespace EmployeeManagmentApplication.Modal.Modals
+namespace EmployeeManagmentApplication.Modal.ApplicationClass.DTO.SalaryDetailsDTO
 {
-    public class SalaryModuleDetails
+    public class SalaryDetailsDTO
     {
         public int SalaryId { get; set; }
 
@@ -17,13 +17,13 @@ namespace EmployeeManagmentApplication.Modal.Modals
 
         public double HRA { get; set; }
         public double DA { get; set; }
-   
+
         public double PT { get; set; }
 
         public double Deduction { get; set; }
 
         public double NetSalary { get; set; }
 
-        
+
     }
 }

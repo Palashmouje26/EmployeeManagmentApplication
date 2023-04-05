@@ -7,11 +7,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EmployeeManagmentApplication.Data
+namespace EmployeeManagmentApplicationRepository.Data
 {
     public interface IDataRepository
     {
-        
+
 
         /// <summary>
         /// Filters data based on predicate.

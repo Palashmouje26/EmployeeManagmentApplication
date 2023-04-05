@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\EmployeeManagmentApplication.Repository\EmployeeManagmentApplication.Repository.csproj" />
+    <ProjectReference Include="..\EmployeeManagmentApplication.Repository\EmployeeManagmentApplicationRepository.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,16 +1,13 @@
-﻿using EmployeeManagmentApplication.Modal;
-using EmployeeManagmentApplication.Modal.Modals;
+﻿using EmployeeManagmentApplication.Modal.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
-using Microsoft.VisualStudio.Web.CodeGeneration.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace EmployeeManagmentApplication.Data
+namespace EmployeeManagmentApplicationRepository.Data
 {
     public class DataRepository : IDataRepository
     {
@@ -28,7 +25,7 @@ namespace EmployeeManagmentApplication.Data
             var dbSet = CreateDbSetAsync<T>();
             await dbSet.AddAsync(entity);
             await _DBContext.SaveChangesAsync();
-            
+
         }
 
         public Task AddRangeAsync<T>(IEnumerable<T> entities) where T : class
@@ -55,7 +52,7 @@ namespace EmployeeManagmentApplication.Data
         public async Task<List<T>> GetAllAsync<T>() where T : class
         {
             var dbSet = CreateDbSetAsync<T>();
-            var values=await dbSet.ToListAsync<T>();
+            var values = await dbSet.ToListAsync();
             return values;
         }
 

@@ -1,23 +1,18 @@
 using AutoMapper;
-using EmployeeManagmentApplication.Data;
-using EmployeeManagmentApplication.Modal.ApplicationClass;
-using EmployeeManagmentApplication.Modal.Modals;
-using EmployeeManagmentApplication.Repository;
+using EmployeeManagmentApplication.Modal.ApplicationClass.Mapper;
+using EmployeeManagmentApplication.Modal.DbContexts;
+using EmployeeManagmentApplication.Repository.EmployeeManagmentPaymentRepository;
+using EmployeeManagmentApplication.Repository.EmployeeManagmentRepository;
+using EmployeeManagmentApplicationRepository.Data;
+using EmployeeManagmentApplicationRepository.Salary;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerUI;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace EmployeeManagmentApp
 {
@@ -67,8 +62,8 @@ namespace EmployeeManagmentApp
             }
             app.UseSwagger();
 
-            app.UseSwaggerUI(c => {
-                
+            app.UseSwaggerUI(c =>
+            {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "WEB API");
                 c.DocumentTitle = "WEB API";
                 c.DocExpansion(DocExpansion.List);

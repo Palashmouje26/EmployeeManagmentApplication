@@ -20,13 +20,14 @@
     <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="6.5.0" />
   </ItemGroup>
 
+
   <ItemGroup>
-    <ProjectReference Include="..\EmployeeManagmentApplication.Data\EmployeeManagmentApplication.Data.csproj" />
+    <Folder Include="ProfileImages\" />
   </ItemGroup>
 
 
   <ItemGroup>
-    <Folder Include="ProfileImages\" />
+    <ProjectReference Include="..\EmployeeManagmentApplication.Repository\EmployeeManagmentApplicationRepository.csproj" />
   </ItemGroup>
 
 

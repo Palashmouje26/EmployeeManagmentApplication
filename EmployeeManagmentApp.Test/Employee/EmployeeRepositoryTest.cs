@@ -1,16 +1,13 @@
 ﻿using System.Collections.Generic;
 using AutoFixture;
 using Moq;
-using FluentAssertions;
 using Xunit;
-using EmployeeManagmentApplication.Repository;
 using System.Threading.Tasks;
-using EmployeeManagmentApplication.Modal.Modals;
 using EmployeeManagmentApplication.Controllers;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using EmployeeManagmentApplication.Data;
-using System;
+using EmployeeManagmentApplication.Repository.EmployeeManagmentRepository;
+using EmployeeManagmentApplicationRepository.Data;
+using EmployeeManagmentApplication.Modal.ApplicationClass.DTO.EmployeeDetailsDTO;
 
 namespace EmployeeManagmentApp.Test.Controller
 {
@@ -27,35 +24,16 @@ namespace EmployeeManagmentApp.Test.Controller
         {
             _fixture = new Fixture();
             _employeeRepository = _fixture.Freeze<Mock<IEmployeeRepository>>();
-            //var x = _employeeRepository.Object;
             _employeeController = new EmployeeController(_employeeRepository.Object);
-
         }
 
-        //[Fact]
-        //public async Task GetEmployeeAsync()
-        //{
-
-        //    //Arrange
-        //    var employeeMock = _fixture.Create<List<EmployeeDetail>>();
-        //    _employeeRepository.Setup(x => x.GetAllEmployeeAsync()).ReturnsAsync(employeeMock);
-        //    //Act
-        //    var result = await _employeeController.GetEmployeeAsync();
-        //    //Assert
-
-        //    result.Should().NotBeNull();
-        //    result.Should().BeAssignableTo<ActionResult<List<EmployeeDetail>>>();
-        //    result.Should().BeAssignableTo<OkObjectResult>();
-        //    result.As<OkObjectResult>().Value.Should().NotBeNull().And.BeOfType(employeeMock.GetType());
-        //    _employeeRepository.Verify(x => x.GetAllEmployeeAsync(), Times.Once());
-        //}
 
         [Fact]
         public async Task GetEmployeeAsync()
         {
             //Arrange
             //var employeeMock = _fixture.Create<List<EmployeeDetail>>();
-            _employeeRepository.Setup(x => x.GetAllEmployeeAsync()).ReturnsAsync(new List<EmployeeDetail>() { new EmployeeDetail(), new EmployeeDetail() }); ;
+            _employeeRepository.Setup(x => x.GetAllEmployeeAsync()).ReturnsAsync(new List<EmployeeDetailsDTO>() { new EmployeeDetailsDTO(), new EmployeeDetailsDTO() });
 
             //Act
             var result = await _employeeController.GetEmployeeAsync();
@@ -63,7 +41,7 @@ namespace EmployeeManagmentApp.Test.Controller
             //Assert
          
             var viewResult = Assert.IsType<OkObjectResult>(result);
-            var employees = Assert.IsType<List<EmployeeDetail>>(viewResult.Value);
+            var employees = Assert.IsType<List<EmployeeDetailsDTO>>(viewResult.Value);
             Assert.Equal(2, employees.Count);
         }
 
@@ -72,7 +50,7 @@ namespace EmployeeManagmentApp.Test.Controller
         {
 
             //Arrange
-            var employeedeatil = new EmployeeDetail
+            var employeedeatil = new EmployeeDetailsDTO
            {
                EmployeeId = 1,
                EmployeeFirstName = "Test",
@@ -90,11 +68,6 @@ namespace EmployeeManagmentApp.Test.Controller
         {
             // Arrange
             int testId = 2;
-
-            _employeeRepository.Setup(repo => repo.EmployeeRemoveAsync(It.IsAny<int>()))
-                   .ReturnsAsync();
-
-           
 
             // Act
             var result = await _employeeController.DeleteEmployeeAsync(testId);

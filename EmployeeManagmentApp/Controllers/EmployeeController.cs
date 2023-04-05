@@ -1,8 +1,5 @@
-﻿using AutoMapper;
-using EmployeeManagmentApplication.Data;
-using EmployeeManagmentApplication.Modal.Modals;
-using EmployeeManagmentApplication.Repository;
-using Microsoft.AspNetCore.Hosting;
+﻿using EmployeeManagmentApplication.Modal.ApplicationClass.DTO.EmployeeDetailsDTO;
+using EmployeeManagmentApplication.Repository.EmployeeManagmentRepository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -29,57 +26,42 @@ namespace EmployeeManagmentApplication.Controllers
         #endregion
 
         #region Public Methods
-        /**
-    * @api {get} /api/employee /:get all employee information
-    * @apiName GetEmployeeAsync
-    * @apiGroup Employee
-    *    
-    * @apiParam {Number} employeeID id of the employee.
-    * 
-    * @apiSuccess {String} firstname Firstname of the employee.
-    * @apiSuccess {String} lastname  Lastname of the employee.
-    * 
-    * @apiSuccessExample Success-Response:
-    *     {
-    *       "firstname": "John",
-    *       "lastname": "Doe",
-    *       "mobile : "7894561230"
-    *     }
-    *     
-    * @apiError EmployeeNotFound The information of the employee was not found.
-    * 
-    */
-        [HttpGet("GetEmployee")]
+            /**
+        * @api {get} /api/EmployeeController /:get all employee information
+        * @apiName GetEmployeeAsync
+        * @apiGroup Employee
+        *    
+        *  @apiSuccess : List Of  employee details.
+        *  
+          * @apiSuccessExample Success-Response:{object[]}  :
+        *     
+        * @apiError EmployeeNotFound the information of the employee was not found.
+        * 
+        */
+        [HttpGet("employee")]
         public async Task<ActionResult> GetEmployeeAsync()
         {
             return Ok(await _EmployeeRepository.GetAllEmployeeAsync());
         }
 
-     /**
-    * @api {get} /api/employee /:id get one particuler employee information
-    * @apiName GetEmployeeByIDAsync
-    * @apiGroup Employee
-    *    
-    * @apiParam {Number} employeeID id of the employee.
-    * 
-    * @apiSuccess {String} firstname Firstname of the employee.
-    * @apiSuccess {String} lastname  Lastname of the employee.
-    * 
-    * @apiSuccessExample Success-Response:
-    *     {
-    *       "firstname": "John",
-    *       "lastname": "Doe"
-    *     }
-    *     
-    * @apiError EmployeeNotFound The id of the employee was not found.
-    * 
-    */
-        [HttpGet("GetEmployeeByID/{Id}")]
+         /**
+        * @api {get} /api/EmployeeController /:id get one particuler employee information
+        * @apiName GetEmployeeByIDAsync
+        * @apiGroup Employee
+        *    
+        * @apiParam {Number}  Id of the employee.
+        * 
+        * @apiSuccess : Show particuler empolyee details.
+
+        *    
+        * @apiError EmployeeNotFound The id of the employee was not found.
+        */
+        [HttpGet("employeebyId/{Id}")]
         public async Task<IActionResult> GetEmployeeByIDAsync([FromRoute] int Id)
         {
             return Ok(await _EmployeeRepository.GetEmployeeByIdAsync(Id));
         }
-                /**
+         /**
          * @api {post} /Employee/
          * @apiBody {String} [firstname]       Mandatory Firstname of the employee.
          * @apiBody {String} lastname          Mandatory Lastname.
@@ -92,9 +74,9 @@ namespace EmployeeManagmentApplication.Controllers
          * @apiBody {bool} Status              employee is Active or Not.
          */
 
-        [HttpPost("AddEmployee")]
+        [HttpPost("addemployee")]
 
-        public async Task<ActionResult> AddEmployeeAsync([FromForm] EmployeeDetail employee)
+        public async Task<ActionResult> AddEmployeeAsync([FromForm] EmployeeDetailsDTO employee)
         {
             var result = await _EmployeeRepository.AddEmployeeAsync(employee);
 
@@ -104,29 +86,17 @@ namespace EmployeeManagmentApplication.Controllers
             }
             return Ok("Added Successfully");
         }
-
-
         /**
-         * @api {put} /employee/ Modify Employee information
+         * @api {put} /EmployeeController/ Modify Employee information
          * @apiName UpdateEmployeeAsync
          * @apiGroup Employee
          *
-         * @apiParam {Number} id          employee unique ID.
-         * @apiParam {String} [firstname] Firstname of the employee.
-         * @apiParam {String} [lastname]  Lastname of the employee.
-         *
-         * @apiSuccessExample Success-Response:
-         *  { 
-         *      firstname = "John",
-         *      Lasttname = "Mathev",
-         *      PhoneNo = " "7894561230"
-         *   
-         *  }
-         *
+         * @apiParam :{object[]} 
+         * 
          * @apiUse EmployeeIDNotFoundError
          */
-        [HttpPut("UpdateEmployee")]
-        public async Task<ActionResult> UpdateEmployeeAsync([FromBody] EmployeeDetail employee)
+        [HttpPut("updateemployee")]
+        public async Task<ActionResult> UpdateEmployeeAsync([FromBody] EmployeeDetailsDTO employee)
         {
             if (employee.EmployeeId != employee.EmployeeId)
             {
@@ -137,48 +107,37 @@ namespace EmployeeManagmentApplication.Controllers
         }
 
         /**
-       * @api {put} /employee/ Modify Employee Active or Inactive
+       * @api {put} /EmployeeController/ Modify Employee Active or Inactive
        * @apiName UpdateSoftdeleteAsync
        * @apiGroup Employee
-       *
-       * @apiParam {Number} id          employee unique ID.
-       
-       *
+
        * @apiSuccessExample Success-Response:
        *  { 
        *      employeeId = 1,
        *  }
-       *
        */
-
-
-        [HttpPut("UpdateSoftDeleteById/{Id}")]
+        [HttpPut("removebyId/{Id}")]
         public async Task<ActionResult> UpdateSoftdeleteAsync(int Id)
         {
-            await _EmployeeRepository.UpdateSoftdeleteByStatusAsync(Id);
+            await _EmployeeRepository.UpdateByStatusAsync(Id);
             return Ok("Update Successfully");
         }
 
         /**
-    * @api {delete} /api/employee /:id get one particuler employee information
-    * @apiName DeleteEmployeeAsync
-    * @apiGroup employee
-    *    
-    * @apiParam {Number} employeeID id of the employee.
-    * 
-    * @apiSuccess {String} firstname Firstname of the employee.
-    * @apiSuccess {String} lastname  Lastname of the employee.
-    * 
-    * @apiSuccessExample Success-Response:
-    *     {
-    *       Remove Successfully
-    *     }
-    *     
-    * @apiError EmployeeNotFound The id of the employee was not found.
-    * 
-    */
-
-        [HttpDelete("{id}")]
+        * @api {delete} /api/EmployeeController /:id get one particuler employee information
+        * @apiName DeleteEmployeeAsync
+        * @apiGroup employee
+        *    
+        * @apiParam: Id of the employee.
+        * 
+        * @apiSuccess {String} firstname Firstname of the employee.
+        * @apiSuccess {String} lastname  Lastname of the employee.
+        * 
+        
+        * @apiError EmployeeNotFound The id of the employee was not found.
+        * 
+        */
+        [HttpDelete("remove/{id}")]
         public async Task<ActionResult> DeleteEmployeeAsync(int id)
         {
             if (id == 0)
@@ -190,8 +149,6 @@ namespace EmployeeManagmentApplication.Controllers
 
             return Ok("Remove Successfully");
         }
-
-      
         #endregion
     }
 
