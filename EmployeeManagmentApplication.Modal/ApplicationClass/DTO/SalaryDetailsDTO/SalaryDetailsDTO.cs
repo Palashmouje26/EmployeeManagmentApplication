@@ -10,7 +10,6 @@ namespace EmployeeManagmentApplication.Modal.ApplicationClass.DTO.SalaryDetailsD
     {
         public int SalaryId { get; set; }
 
-        [ForeignKey("EmployeeId")]
         public int EmployeeId { get; set; }
 
         public double Basic { get; set; }

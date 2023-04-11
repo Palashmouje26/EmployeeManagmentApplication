@@ -22,7 +22,7 @@ namespace EmployeeManagmentApplication.Controllers
 
         #region Public Methods
         /**
-        * @api {get} /api/EmployeePaymentController/: All employee details with Salary information.
+        * @api {get} /api/EmployeePayment/: All employee details with Salary information.
         * @apiName GetEmployeeWithSalaryDetail.
         * @apiGroup EmployeePaymentDetail.
         * 
@@ -31,8 +31,6 @@ namespace EmployeeManagmentApplication.Controllers
         *       "EmployeeId": "1",
         *       "Basic: "2000"
         *     }
-        *     
-        * @apiError EmployeeIdNotFound The information of the employee was not found. 
         */
         [HttpGet("employeewithsalarydetail")]
         public async Task<IActionResult> GetEmployeeWithSalaryDetail()
@@ -40,15 +38,13 @@ namespace EmployeeManagmentApplication.Controllers
             return Ok(await _employeePaymentRepository.GetAllEmployeepaymentDetailAsync());
         }
         /**
-        * @api {get} /api/EmployeePaymentController /:One employee details with Salary information.
+        * @api {get} /api/EmployeePayment/:One employee details with Salary information.
         * @apiName GetEmployeepaymentDetailByIdAsync.
         * @apiGroup EmployeePaymentDetail
         * 
         * @apiParam {Number} Id  of the employee.
         * 
         * @apiSuccess : Showing user payment details.
-        * 
-        * @apiError EmployeeIdNotFound The information of the employee was not found.
         * 
         */
         [HttpGet("paymentdetailbyId/{Id}")]

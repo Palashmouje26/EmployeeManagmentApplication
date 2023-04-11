@@ -14,20 +14,20 @@ namespace EmployeeManagmentApplication.Repository.EmployeeManagmentPaymentReposi
     public class EmployeePaymentRepository : IEmployeePaymentRepository
     {
         #region Privet Members
-        private readonly IEmployeeRepository _EmployeeRepository;
-        private readonly ISalaryModuleRepository _SalaryModuleRepository;
+        private readonly IEmployeeRepository _employeeRepository;
+        private readonly ISalaryModuleRepository _salaryModuleRepository;
         private readonly IDataRepository _dataReposatory;
         private readonly IMapper _mapper;
         #endregion
 
         #region Constructor
         public EmployeePaymentRepository(IDataRepository dataReposatory, IMapper mapper, 
-            IEmployeeRepository employeeRepository, ISalaryModuleRepository SalaryModuleRepository)
+            IEmployeeRepository employeeRepository, ISalaryModuleRepository salaryModuleRepository)
         {
             _dataReposatory = dataReposatory;
             _mapper = mapper;
-            _EmployeeRepository = employeeRepository;
-            _SalaryModuleRepository = SalaryModuleRepository;
+            _employeeRepository = employeeRepository;
+            _salaryModuleRepository = salaryModuleRepository;
         }
         #endregion
         /// <summary>
@@ -67,8 +67,8 @@ namespace EmployeeManagmentApplication.Repository.EmployeeManagmentPaymentReposi
         public async Task<EmployeePaymentDetailsDTO> GetEmployeepaymentDetailByIdAsync(int Id)
         {
 
-            var EmployeeDetail = await _EmployeeRepository.GetEmployeeByIdAsync(Id);
-            var salaryDetail = await _SalaryModuleRepository.GetSalaryModuleByIDAsync(Id);
+            var EmployeeDetail = await _employeeRepository.GetEmployeeByIdAsync(Id);
+            var salaryDetail = await _salaryModuleRepository.GetSalaryByIDAsync(Id);
 
             EmployeePaymentDetailsDTO employeePaymentDetail1 = new EmployeePaymentDetailsDTO
             {

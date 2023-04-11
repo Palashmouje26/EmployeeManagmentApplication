@@ -70,7 +70,7 @@ namespace EmployeeManagmentApp.Test.Controller
             int testId = 2;
 
             // Act
-            var result = await _employeeController.DeleteEmployeeAsync(testId);
+            var result = await _employeeController.RemoveEmployeeById(testId);
 
             // Assert
             var redirectToActionResult = Assert.IsType<RedirectToActionResult>(result);

@@ -26,7 +26,7 @@ namespace EmployeeManagmentApplication.Controllers
 
         #region Public Methods
         /**
-        * @api {get}/api/SalaryModuleController /:List of  all salary information show.
+        * @api {get}/api/Salary/ salary of all employee information.
         * @apiName GetSalaryModuleAsync
         * @apiGroup SalaryModule
         *    
@@ -36,14 +36,13 @@ namespace EmployeeManagmentApplication.Controllers
         *     
         */
         [HttpGet("salary")]
-    
         public async Task<ActionResult<List<SalaryDetailsDTO>>> GetSalaryModuleAsync()
         {
-            return Ok(await _SalaryModuleRepository.GetAllSalaryModuleAsync());
+            return Ok(await _SalaryModuleRepository.GetAllSalaryAsync());
    
         }
         /**
-        * @api {get} /api/SalaryModuleController /:Id get one particuler salary information
+        * @api {get} /api/Salary/ Id get one particuler salary information
         * @apiName GetSalaryModuleByIDAsync.
         * @apiGroup SalaryModule
         *    
@@ -51,7 +50,6 @@ namespace EmployeeManagmentApplication.Controllers
         * 
         * @apiSuccess : Showing salary detail of employee.
         *     
-        * @apiError EmployeeIdNotFound The information of the employee was not found.
         * 
         * @apiSuccess 200 OK.
         */
@@ -59,27 +57,18 @@ namespace EmployeeManagmentApplication.Controllers
 
         public async Task<IActionResult> GetSalaryModuleByIDAsync(int Id)
         {
-            return Ok(await _SalaryModuleRepository.GetSalaryModuleByIDAsync(Id));
+            return Ok(await _SalaryModuleRepository.GetSalaryByIDAsync(Id));
         }
 
         /**
-    * @api {post} /SalaryModule/ add or insert new salary 
-    * @apiName AddSalaryModuleAsync
-    * @apiGroup SalaryModuyle
-    * @apiBody {int} salaryId             Mandatory to insert salaryId  of the SalaryModule.
-    * @apiBody {int} EmployeeId           Mandatory to insert employeeId for the particular employee
-    * @apiBody {double} Basic             Mandatory to insert basic Salary  for the employee.
-    * @apiBody {double} HRA               Optional to insert.
-    * @apiBody {double} DA                Optional to insert.
-    * @apiBody {double} PT                Optional to insert.
-    * @apiBody {double} Deduction         Optional to insert.
-    * @apiBody {String} NetSalary         Optional to insert.
-    * 
-    * @apiSuccess 200 OK.
-    */
+        * @api {post} api/Salary/add salary Method to add employee salary detail.
+        * 
+        * @apiSuccess 200 OK.
+
+        */
         [HttpPost("addsalary")]
 
-        public async Task<ActionResult<SalaryModule>> AddSalaryModuleAsync([FromBody] SalaryDetailsDTO salaryModule)
+        public async Task<ActionResult<EmployeeSalary>> AddSalaryModuleAsync([FromBody] SalaryDetailsDTO salaryModule)
         {
             var result = await _SalaryModuleRepository.AddSalaryAsync(salaryModule);
 
@@ -91,13 +80,11 @@ namespace EmployeeManagmentApplication.Controllers
         }
 
         /**
-        * @api {put} /SalaryModuleController/ Modify slarymodule information.
+        * @api {put} /Salary/ Modify slarymodule information.
         * @apiName UpdateSalaryModuleAsync.
         * @apiGroup SalaryModule
         *
-        * @apiParam {int} id           Salary unique ID.
-        * @apiParam {int} [EmployeeId  employeeId of the employee.
-        * @apiParam {Number} Basic      new basic salary inpur
+        * @apiParam :{object[]} 
         *
         *  }
         * @apiSuccess 200 OK.
@@ -110,7 +97,7 @@ namespace EmployeeManagmentApplication.Controllers
             {
                 return BadRequest();
             }
-            var response = await _SalaryModuleRepository.UpdateSalaryModuleAsync(salaryModule);
+            var response = await _SalaryModuleRepository.UpdateSalaryAsync(salaryModule);
            
             if(response is null)
             {
@@ -119,26 +106,6 @@ namespace EmployeeManagmentApplication.Controllers
             return Ok("Updated Successfully");
         }
 
-            /**
-          * @api {delete} /api/SalaryModuleController /:Id get one particuler employee salary information to delete.
-          * @apiName DeleteSalaryAsync.
-          * @apiGroup SalaryModule.
-          *    
-          * @apiRoute {Number}  Id used for remove salary detail from storage.
-          *
-          * @apiSuccess 200 OK.
-          */
-        [HttpDelete("deletesalary")]
-        public async Task<ActionResult> DeleteSalaryAsync(int id)
-        {
-            if (id == 0)
-            {
-                return BadRequest("Value Enter Invalid");
-            }
-            var result =  await _SalaryModuleRepository.SalaryModuleRemoveAsync(id);
-
-            return Ok("Remove Successfully");
-        }
 
         #endregion
     }

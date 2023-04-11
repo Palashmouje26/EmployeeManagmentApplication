@@ -11,17 +11,22 @@ namespace EmployeeManagmentApplication.Modal.Models.EmployeeManagment
     public class Employee
     {
 
+        /// <summary>
+        /// Id of the employee.
+        /// </summary>
         [Key]
         public int EmployeeId { get; set; }
 
-        [Required]
 
+        [Required]
         [RegularExpression(@"^[a-zA-Z''-'\s]{1,40}$",
          ErrorMessage = "Characters are not allowed.")]
         public string EmployeeFirstName { get; set; }
+
         [Required]
         [RegularExpression(@"^[a-zA-Z''-'\s]{1,40}$")]
         public string EmployeeLastName { get; set; }
+
 
         [RegularExpression(@"^[a-z0-9][-a-z0-9._]+@([-a-z0-9]+\.)+[a-z]{2,5}$", ErrorMessage = "Email address must be Combination email.")]
         public string EmailId { get; set; }
@@ -36,9 +41,11 @@ namespace EmployeeManagmentApplication.Modal.Models.EmployeeManagment
 
         [RegularExpression(@"[A-Z]{5}[0-9]{4}[A-Z]{1}", ErrorMessage = "enter Valid Pan number only")]
         public string PanCard { get; set; }
+
         public string EmployeeProfilePhoto { get; set; }
+
         public bool Status { get; set; }
 
-        public virtual SalaryModule SalaryModule { get; set; }
+        public virtual EmployeeSalary SalaryModule { get; set; }
     }
 }

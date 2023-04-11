@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using EmployeeManagmentApplication.Modal.EmployeeProfile;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -17,17 +16,17 @@ namespace EmployeeManagmentApplication.Repository.EmployeeManagmentRepository
     public class EmployeeRepository : IEmployeeRepository
     {
         #region Private Member
-        private readonly IDataRepository _dataReposatory;
+        private readonly IDataRepository _dataRepository;
         private readonly IMapper _mapper;
         private readonly IWebHostEnvironment _webHostEnvironment;
         #endregion
 
 
         #region Constructor
-        public EmployeeRepository(IDataRepository dataReposatory, IMapper mapper, IWebHostEnvironment webHostEnvironment)
+        public EmployeeRepository(IDataRepository dataRepository, IMapper mapper, IWebHostEnvironment webHostEnvironment)
         {
 
-            _dataReposatory = dataReposatory;
+            _dataRepository = dataRepository;
             _mapper = mapper;
             _webHostEnvironment = webHostEnvironment;
         }
@@ -40,7 +39,7 @@ namespace EmployeeManagmentApplication.Repository.EmployeeManagmentRepository
         /// <returns>returs to showing list </returns>
         public async Task<List<EmployeeDetailsDTO>> GetAllEmployeeAsync()
         {
-            var employeeDetails = await _dataReposatory.Where<Employee>(a => a.Status).AsNoTracking().ToListAsync();
+            var employeeDetails = await _dataRepository.Where<Employee>(a => a.Status).AsNoTracking().ToListAsync();
             return _mapper.Map<List<Employee>, List<EmployeeDetailsDTO>>(employeeDetails);
         }
 
@@ -51,7 +50,7 @@ namespace EmployeeManagmentApplication.Repository.EmployeeManagmentRepository
         /// <returns>return show employee details</returns>
         public async Task<EmployeeDetailsDTO> GetEmployeeByIdAsync(int empId)
         {
-            var employeeDetail = await _dataReposatory.FirstAsync<Employee>(a => a.EmployeeId == empId);
+            var employeeDetail = await _dataRepository.FirstAsync<Employee>(a => a.EmployeeId == empId);
             return _mapper.Map<EmployeeDetailsDTO>(employeeDetail);
 
         }
@@ -63,13 +62,12 @@ namespace EmployeeManagmentApplication.Repository.EmployeeManagmentRepository
         public async Task<EmployeeDetailsDTO> AddEmployeeAsync(EmployeeDetailsDTO employee)
         {
             var newEmployee = _mapper.Map<EmployeeDetailsDTO, Employee>(employee);
+
             newEmployee.EmployeeId = 0;
 
-            if (newEmployee.EmployeeId == 0)
-            {
                 if (employee.Image.Length <= 2097152)  // File size checking up to 2 mb  
                 {
-                    var fileExtenstion = EmployeeProfiel(employee.Image); // file will be checking is extansion formate 
+                    bool fileExtenstion = EmployeeProfielAsync(employee.Image); // file will be checking is extansion formate 
                     if (!fileExtenstion)
                     {
                         return null;
@@ -82,9 +80,9 @@ namespace EmployeeManagmentApplication.Repository.EmployeeManagmentRepository
                         employee.Image.CopyTo(stream);
                     }
                     newEmployee.EmployeeProfilePhoto = employee.Image.FileName;
-                    await _dataReposatory.AddAsync(newEmployee);
+                    await _dataRepository.AddAsync(newEmployee);
                 }
-            }
+           
             return _mapper.Map<Employee, EmployeeDetailsDTO>(newEmployee);
 
         }
@@ -96,30 +94,13 @@ namespace EmployeeManagmentApplication.Repository.EmployeeManagmentRepository
         /// <returns>It retuns the result</returns>
         public async Task<EmployeeDetailsDTO> UpdateEmployeeAsync(EmployeeDetailsDTO employeeDetail)
         {
-            var employeeDetails = await _dataReposatory.FirstAsync<Employee>(a => a.EmployeeId == employeeDetail.EmployeeId);
-
-            employeeDetails.EmployeeFirstName = employeeDetail.EmployeeFirstName;
-            employeeDetails.EmployeeLastName = employeeDetail.EmployeeLastName;
-            employeeDetails.PhoneNumber = employeeDetail.PhoneNumber;
-
-            await _dataReposatory.UpdateAsync(employeeDetails);
-            return employeeDetail;
+            var employeeDetails = await _dataRepository.FirstAsync<Employee>(a => a.EmployeeId == employeeDetail.EmployeeId);
+            var response = _mapper.Map<EmployeeDetailsDTO, Employee>(employeeDetail, employeeDetails);
+            await _dataRepository.UpdateAsync(response);
+            return _mapper.Map<EmployeeDetailsDTO>(employeeDetails);
+       
         }
-        /// <summary>
-        /// This Method is used for remove or inactive employee.
-        /// </summary>
-        /// <param name="id">Id Is used for removing the employee.</param>
-        /// <returns>It returns the object</returns>
-        public async Task<EmployeeDetailsDTO> EmployeeRemoveAsync(int id)
-        {
-            var empoyeeDetail = _dataReposatory.FirstOrDefaultAsync<Employee>(a => a.EmployeeId == id);
 
-            if (empoyeeDetail != null)
-            {
-                await _dataReposatory.RemoveAsync(empoyeeDetail);
-            }
-            return _mapper.Map<EmployeeDetailsDTO>(empoyeeDetail);
-        }
 
         /// <summary>
         /// This Method is used for status change.
@@ -128,21 +109,30 @@ namespace EmployeeManagmentApplication.Repository.EmployeeManagmentRepository
         /// <returns>return status change.</returns>
         public async Task UpdateByStatusAsync(int empId)
         {
-            var employeeDetail = await _dataReposatory.FirstAsync<Employee>(a => a.EmployeeId == empId);
+            var employeeDetail = await _dataRepository.FirstOrDefaultAsync<Employee>(a => a.EmployeeId == empId);
+
+            if (employeeDetail != null)
+            {
+                employeeDetail.Status = false;
+            }
+            else
+            {
+                throw new Exception("Employee Not Exits");
+            }
             employeeDetail.Status = false;
-            await _dataReposatory.UpdateAsync(employeeDetail);
+            await _dataRepository.UpdateAsync(employeeDetail);
         }
 
         /// <summary>
         /// This Method is checking the file formate of image.
         /// </summary>
-        /// <param name="employeeprofilePhoto">Current images fromate checking.</param>
-        /// <returns>returns true or false</returns>
+        /// <param name="employeeProfilePhoto">Current images fromate checking.</param>
+        /// <returns>When file is validate then return true else false.</returns>
         #region Private Method
-        private bool EmployeeProfiel(IFormFile employeeprofilePhoto)  // checking the file is jpg ,jpeg and png formate // 
+        private bool EmployeeProfielAsync(IFormFile employeeProfilePhoto)  // checking the file is jpg ,jpeg and png formate // 
         {
             var supportedtype = new[] { ".jpg", ".jpeg", ".png" };
-            var fileExtension = Path.GetExtension(employeeprofilePhoto.FileName);
+            var fileExtension = Path.GetExtension(employeeProfilePhoto.FileName);
             if (!supportedtype.Contains(fileExtension))
             {
                 return false;

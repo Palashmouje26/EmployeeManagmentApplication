@@ -16,10 +16,10 @@ namespace EmployeeManagmentApplication.Modal.ApplicationClass.Mapper
         public MapperProfile()
         {
             CreateMap<EmployeeDetailsDTO, Employee>().ReverseMap();
-            CreateMap<SalaryDetailsDTO, SalaryModule>().ReverseMap();
+            CreateMap<SalaryDetailsDTO, EmployeeSalary>().ReverseMap();
             CreateMap<Employee, EmployeePaymentDetailsDTO>().ReverseMap();
-            CreateMap<SalaryModule, SalaryModule>().ReverseMap();
-            //CreateMap<Employee, SalaryModule>().ReverseMap();
+            CreateMap<EmployeeSalary, EmployeeSalary>().ReverseMap();
+           
 
         }
     }

@@ -14,7 +14,7 @@ namespace EmployeeManagmentApplication.Modal.DbContexts
 
         }
         public DbSet<Employee> Employee { get; set; }
-        public DbSet<SalaryModule> SalaryModule { get; set; }
+        public DbSet<EmployeeSalary> SalaryModule { get; set; }
         public string ContentRootPath { get; internal set; }
     }
 }
