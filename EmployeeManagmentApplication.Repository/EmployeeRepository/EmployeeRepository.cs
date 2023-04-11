@@ -101,7 +101,6 @@ namespace EmployeeManagmentApplication.Repository.EmployeeManagmentRepository
        
         }
 
-
         /// <summary>
         /// This Method is used for status change.
         /// </summary>

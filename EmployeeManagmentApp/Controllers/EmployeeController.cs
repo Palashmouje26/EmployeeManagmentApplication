@@ -79,7 +79,7 @@ namespace EmployeeManagmentApplication.Controllers
             return Ok("Added Successfully");
         }
         /**
-         * @api {put} /Employee/ Modify Employee information
+         * @api {put} /Employee/ Modify Employee information.
          * @apiName UpdateEmployeeAsync
          * @apiGroup Employee
          *
@@ -99,14 +99,11 @@ namespace EmployeeManagmentApplication.Controllers
         }
 
        /**
-       * @api {put} /Employee/ Modify Employee Active or Inactive
+       * @api {put} /Employee/ Modify Employee Active or Inactive.
        * @apiName UpdateSoftdeleteAsync
        * @apiGroup Employee
 
        * @apiSuccessExample Success-Response:
-       *  { 
-       *      employeeId = 1,
-       *  }
        */
         [HttpPut("updatesoftdelete/{Id}")]
         public async Task<ActionResult> UpdateSoftdeleteAsync(int Id)
@@ -114,32 +111,7 @@ namespace EmployeeManagmentApplication.Controllers
             await _employeeRepository.UpdateByStatusAsync(Id);
             return Ok("Update Successfully");
         }
-
-        /**
-        * @api {delete} /api/Employee /:id get one particuler employee information
-        * @apiName DeleteEmployeeAsync
-        * @apiGroup employee
-        *    
-        * @apiParam: Id of the employee.
-        * 
-        * @apiSuccess {String} firstname Firstname of the employee.
-        * @apiSuccess {String} lastname  Lastname of the employee.
-        * 
-        * @apiError EmployeeNotFound The id of the employee was not found.
-        * 
-        */
-        [HttpDelete("removeemployee/{id}")]
-        public async Task<ActionResult> RemoveEmployeeById(int id)
-        {
-            if (id == 0)
-            {
-                return BadRequest("Value Enter Invalid");
-            }
-
-            var eemp = await _employeeRepository.RemoveEmployeeById(id);
-
-            return Ok("Remove Successfully");
-        }
+      
         #endregion
     }
 

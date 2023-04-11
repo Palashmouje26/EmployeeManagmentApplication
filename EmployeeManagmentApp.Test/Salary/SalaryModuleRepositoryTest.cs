@@ -33,7 +33,7 @@ namespace EmployeeManagmentApp.Test.NewFolder
         {
             //Arrange
             //var employeeMock = _fixture.Create<List<EmployeeDetail>>();
-            _salaryModuleRepository.Setup(x => x.GetAllSalaryModuleAsync()).ReturnsAsync(new List<SalaryDetailsDTO>() { new SalaryDetailsDTO(), new SalaryDetailsDTO() }); ;
+            _salaryModuleRepository.Setup(x => x.GetAllSalaryAsync()).ReturnsAsync(new List<SalaryDetailsDTO>() { new SalaryDetailsDTO(), new SalaryDetailsDTO() }); ;
 
             //Act
             var result = await _salaryModuleController.GetSalaryModuleAsync();
@@ -54,7 +54,7 @@ namespace EmployeeManagmentApp.Test.NewFolder
                 EmployeeId = 1,
                 Basic = 2000
             };
-            _salaryModuleRepository.Setup(x => x.GetSalaryModuleByIDAsync(SalaryModuleDetails.SalaryId)).ReturnsAsync(SalaryModuleDetails);
+            _salaryModuleRepository.Setup(x => x.GetSalaryByIDAsync(SalaryModuleDetails.SalaryId)).ReturnsAsync(SalaryModuleDetails);
 
             //Act
             var result = await _salaryModuleController.GetSalaryModuleByIDAsync(1);
